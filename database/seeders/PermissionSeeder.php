@@ -31,44 +31,28 @@ class PermissionSeeder extends Seeder
             ['name' => 'Delete User','guard_name' => 'web',],
         ]);
 
-        $super_admin = Role::create(['name' => 'Super Admin',
-                                        'description' => 'This Role has Complete Authority, Not Modifiable',    
-        ]);
+        //Super Admin
+        $super_admin = Role::create(['name' => 'Super Admin', 'description' => 'This Role has Complete Authority, Not Modifiable.' ]);
         User::find(1)->assignRole($super_admin);
 
-        $admin = Role::create(['name' => 'Admin',
-                            'description' => 'This is the role with custom permissions',        
-        ]);
+        //Admin
+        $admin = Role::create(['name' => 'Admin', 'description' => 'This is the role for admin users.' ]);
+        User::find(2)->assignRole($admin);
 
-        // $po_owner->syncPermissions(['Edit Employee',
-        //                             'View Supplier',
-        //                             'Add Supplier',
-        //                             'Edit Supplier',
-        //                             'Delete Supplier',
-        //                             'View Client',
-        //                             'Add Client',
-        //                             'Edit Client',
-        //                             'Delete Client',
-        //                             'View RFQ', 
-        //                             'Add RFQ',
-        //                             'Edit RFQ', 
-        //                             'Delete RFQ', 
-        //                             'View PO', 
-        //                             'Add PO',
-        //                             'Edit PO', 
-        //                             'Delete PO',
-        //                             'View Report',
-        // ]);
-        
-        // $faker = Faker::create();
-    	// foreach (range(1,50) as $index) {
-        //     $user = User::create([
-        //         'name' => $faker->name,
-        //         'email' => $faker->email,
-        //         'password' => Hash::make('password123'),
-        //     ]);
+        //Officer
+        $officer = Role::create(['name' => 'Officer', 'description' => 'This is the role for office users.' ]);
+        User::find(3)->assignRole($officer);
 
-        //     $user->assignRole($po_owner);
-        // }
+        //Driver
+        $driver = Role::create(['name' => 'Driver', 'description' => 'This is the role for drivers.' ]);
+        User::find(4)->assignRole($driver);
+
+        //User
+        $user = Role::create(['name' => 'User', 'description' => 'This is the role for application users.' ]);
+        User::find(5)->assignRole($user);
+
+        //Vendor
+        $vendor = Role::create(['name' => 'Vendor', 'description' => 'This is the role for vendors.' ]);
+        User::find(6)->assignRole($vendor);
     }
 }
