@@ -58,8 +58,8 @@
                 @endcanany
 
                 @canany(['View User'])
-                    <li class="nav-item {{ active_class(['user/*']) }}">
-                        <a href="{{ url('user/view') }}" class="nav-link">
+                    <li class="nav-item {{ active_class(['route/*']) }}">
+                        <a href="{{ url('route/view') }}" class="nav-link">
                             <i class="link-icon fa fa-road"></i>
                             <span class="link-title">Routes</span>
                         </a>
@@ -74,7 +74,17 @@
                     <li class="nav-item {{ active_class(['role/*']) }}">
                         <a href="{{ url('role/view') }}" class="nav-link">
                             <i class="link-icon fa fa-credit-card"></i>
-                            <span class="link-title">Membership</span>
+                            <span class="link-title">Subscriptions</span>
+                        </a>
+                    </li>
+                @endcanany
+
+                @canany(['View Role'])
+                    <li class="nav-item {{ active_class(['role/*']) }}">
+                        <a href="{{ url('role/view') }}" class="nav-link">
+                            <i class="link-icon fa fa-address-card"></i>
+                            {{-- <i class="link-icon fa fa-credit-card"></i> --}}
+                            <span class="link-title">User Subscriptions</span>
                         </a>
                     </li>
                 @endcanany

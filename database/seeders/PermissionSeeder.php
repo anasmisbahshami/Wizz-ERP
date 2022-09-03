@@ -36,6 +36,14 @@ class PermissionSeeder extends Seeder
             ['name' => 'Edit Vehicle','guard_name' => 'web',],
             ['name' => 'Delete Vehicle','guard_name' => 'web',],
 
+            ['name' => 'Add Route','guard_name' => 'web',],
+            ['name' => 'View Route','guard_name' => 'web',],
+            ['name' => 'Edit Route','guard_name' => 'web',],
+            ['name' => 'Delete Route','guard_name' => 'web',],
+
+            ['name' => 'Add City','guard_name' => 'web',],
+
+
         ]);
 
         //Super Admin

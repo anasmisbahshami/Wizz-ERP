@@ -46,7 +46,14 @@ Route::group(['middleware' => 'auth', 'prevent-back-history'], function () {
     Route::post('/vehicle/update/{id}', [App\Http\Controllers\VehicleController::class, 'update'])->middleware('can:Edit Vehicle');
     Route::get('/vehicle/destroy/{id}', [App\Http\Controllers\VehicleController::class, 'destroy'])->middleware('can:Delete Vehicle');
 
-
+    //Vehicle Routes
+    Route::get('/route/view', [App\Http\Controllers\RouteController::class, 'view'])->middleware('can:View Route');
+    Route::get('/route/add', [App\Http\Controllers\RouteController::class, 'create'])->middleware('can:Add Route');
+    Route::post('/route/store', [App\Http\Controllers\RouteController::class, 'store'])->middleware('can:Add Route');
+    Route::get('/route/edit/{id}', [App\Http\Controllers\RouteController::class, 'edit'])->middleware('can:Edit Route');
+    Route::post('/route/update/{id}', [App\Http\Controllers\RouteController::class, 'update'])->middleware('can:Edit Route');
+    Route::get('/route/destroy/{id}', [App\Http\Controllers\RouteController::class, 'destroy'])->middleware('can:Delete Route');
+    Route::post('/city/store', [App\Http\Controllers\RouteController::class, 'city_store'])->middleware('can:Add City');
 
 
 });
