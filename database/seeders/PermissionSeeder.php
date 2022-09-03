@@ -43,7 +43,17 @@ class PermissionSeeder extends Seeder
 
             ['name' => 'Add City','guard_name' => 'web',],
 
+            ['name' => 'Add Subscription','guard_name' => 'web',],
+            ['name' => 'View Subscription','guard_name' => 'web',],
+            ['name' => 'Edit Subscription','guard_name' => 'web',],
+            ['name' => 'Delete Subscription','guard_name' => 'web',],
 
+            ['name' => 'Add User Subscription','guard_name' => 'web',],
+            ['name' => 'View User Subscription','guard_name' => 'web',],
+            ['name' => 'Edit User Subscription','guard_name' => 'web',],
+            ['name' => 'Delete User Subscription','guard_name' => 'web',],
+            ['name' => 'Renewal Mail User Subscription','guard_name' => 'web',],
+            ['name' => 'Acknowledge User Subscription','guard_name' => 'web',],
         ]);
 
         //Super Admin

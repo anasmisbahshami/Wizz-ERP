@@ -8,7 +8,7 @@
 @section('content')
   <nav class="page-breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{{ url('vehicle/view') }}">Vehicles</a></li>
+      <li class="breadcrumb-item"><a href="{{ url('subscription/view') }}">Subscriptions</a></li>
       <li class="breadcrumb-item active" aria-current="page">View</li>
     </ol>
   </nav>
@@ -37,11 +37,11 @@
         <div class="card-body">
           <div class="row">
             <div class="col-md-6">
-              <h6 class="card-title">Vehicles List</h6>
+              <h6 class="card-title">Subscriptions List</h6>
             </div>
-            @can('Add Vehicle')
+            @can('Add Subscription')
               <div class="col-md-6">
-                <a href="{{ url('vehicle/add') }}" type="button" class="btn btn-primary" style="float:right;">Add Vehicle</a>
+                <a href="{{ url('subscription/add') }}" type="button" class="btn btn-primary" style="float:right;">Add Subscription</a>
               </div>
             @endcan
           </div>
@@ -56,13 +56,13 @@
                     Name
                   </th>
                   <th>
-                    Reg No.
+                    Description
                   </th>
                   <th>
-                    Ownership
+                    Price
                   </th>
                   <th>
-                    Type
+                    Weight
                   </th>
                   <th class="text-center" data-orderable="false">
                     Actions
@@ -70,23 +70,23 @@
                 </tr>
               </thead>
               <tbody>
-                @foreach($vehicles as $serial => $vehicle)
+                @foreach($subscriptions as $serial => $subscription)
                 <tr>
                   <td>{{ $serial + 1 }}</td>
-                  <td>{{ $vehicle->name }}</td>
-                  <td>{{ $vehicle->number_plate }}</td>
-                  <td>{{ $vehicle->ownership }}</td>
-                  <td>{{ $vehicle->type }}</td>
+                  <td>{{ $subscription->name }}</td>
+                  <td>{{ $subscription->description }}</td>
+                  <td> Rs {{ number_format($subscription->price, 2) }}</td>
+                  <td>{{ number_format($subscription->weight, 2) }} kg</td>
                   <td class="text-center">  
-                      @can('Edit Vehicle')
-                        <a title="Edit" href="{{ url('vehicle/edit/'.encrypt($vehicle->id)) }}">
+                      @can('Edit Subscription')
+                        <a title="Edit" href="{{ url('subscription/edit/'.encrypt($subscription->id)) }}">
                           <button type="button" class="btn btn-primary btn-icon">
                             <i data-feather="edit"></i>
                           </button>
                         </a>
                       @endcan                  
                       
-                      @can('Delete Vehicle')
+                      @can('Delete Subscription')
                         <a title="Delete" data-toggle="modal" data-target="#actionModal{{$serial}}">
                           <button type="button" class="btn btn-primary btn-icon">
                             <i data-feather="trash-2"></i>
@@ -102,11 +102,11 @@
                                 </button>
                               </div>
                               <div class="modal-body">
-                                Are you sure you want to delete this vehicle?
+                                Are you sure you want to delete this subscription?
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <a href="{{ url('vehicle/destroy/'.encrypt($vehicle->id)) }}" type="button" class="btn btn-primary">Yes</a>
+                                <a href="{{ url('subscription/destroy/'.encrypt($subscription->id)) }}" type="button" class="btn btn-primary">Yes</a>
                               </div>
                             </div>
                           </div>

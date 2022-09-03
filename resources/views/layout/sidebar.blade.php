@@ -1,9 +1,7 @@
 <nav class="sidebar">
     <div class="sidebar-header">
         <a href="#" class="sidebar-brand">
-            <!-- PurchaseOrder<span>MS</span> -->
             <img src="{{ asset('assets/images/LOGO_RGB_W.svg') }}" style="width:100px;">
-
         </a>
         <div class="sidebar-toggler not-active">
             <span></span>
@@ -46,9 +44,9 @@
             @endcanany
 
             {{-- Route Way Management --}}
-            @canany(['View Role', 'View User'])
+            @canany(['View Vehicle', 'View Route'])
                 <li class="nav-item nav-category">Routeway Management</li>
-                @canany(['View Role'])
+                @canany(['View Vehicle'])
                     <li class="nav-item {{ active_class(['vehicle/*']) }}">
                         <a href="{{ url('vehicle/view') }}" class="nav-link">
                             <i class="link-icon" data-feather="truck"></i>
@@ -57,7 +55,7 @@
                     </li>
                 @endcanany
 
-                @canany(['View User'])
+                @canany(['View Route'])
                     <li class="nav-item {{ active_class(['route/*']) }}">
                         <a href="{{ url('route/view') }}" class="nav-link">
                             <i class="link-icon fa fa-road"></i>
@@ -68,23 +66,22 @@
             @endcanany
 
             {{-- Subscription Management --}}
-            @canany(['View Role', 'View User'])
+            @canany(['View Subscription', 'View User Subscription'])
                 <li class="nav-item nav-category">Subscription Management</li>
-                @canany(['View Role'])
-                    <li class="nav-item {{ active_class(['role/*']) }}">
-                        <a href="{{ url('role/view') }}" class="nav-link">
+                @canany(['View Subscription'])
+                    <li class="nav-item {{ active_class(['subscription/*']) }}">
+                        <a href="{{ url('subscription/view') }}" class="nav-link">
                             <i class="link-icon fa fa-credit-card"></i>
                             <span class="link-title">Subscriptions</span>
                         </a>
                     </li>
                 @endcanany
 
-                @canany(['View Role'])
-                    <li class="nav-item {{ active_class(['role/*']) }}">
-                        <a href="{{ url('role/view') }}" class="nav-link">
+                @canany(['View User Subscription'])
+                    <li class="nav-item {{ active_class(['user-subscription/*']) }}">
+                        <a href="{{ url('user-subscription/view') }}" class="nav-link">
                             <i class="link-icon fa fa-address-card"></i>
-                            {{-- <i class="link-icon fa fa-credit-card"></i> --}}
-                            <span class="link-title">User Subscriptions</span>
+                            <span class="link-title">Users Subscriptions</span>
                         </a>
                     </li>
                 @endcanany

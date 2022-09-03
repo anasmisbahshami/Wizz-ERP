@@ -8,7 +8,7 @@
 @section('content')
   <nav class="page-breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{{ url('vehicle/view') }}">Vehicles</a></li>
+      <li class="breadcrumb-item"><a href="{{ url('user-subscription/view') }}">Users Subscriptions</a></li>
       <li class="breadcrumb-item active" aria-current="page">View</li>
     </ol>
   </nav>
@@ -37,11 +37,11 @@
         <div class="card-body">
           <div class="row">
             <div class="col-md-6">
-              <h6 class="card-title">Vehicles List</h6>
+              <h6 class="card-title">Users Subscriptions List</h6>
             </div>
-            @can('Add Vehicle')
+            @can('Add User Subscription')
               <div class="col-md-6">
-                <a href="{{ url('vehicle/add') }}" type="button" class="btn btn-primary" style="float:right;">Add Vehicle</a>
+                <a href="{{ url('user-subscription/add') }}" type="button" class="btn btn-primary" style="float:right;">Add User Subscription</a>
               </div>
             @endcan
           </div>
@@ -53,16 +53,22 @@
                     #
                   </th>
                   <th>
-                    Name
+                    Username
                   </th>
                   <th>
-                    Reg No.
+                    Subscription
                   </th>
                   <th>
-                    Ownership
+                    Start Date
                   </th>
                   <th>
-                    Type
+                    End Date
+                  </th>
+                  <th>
+                    Remaining Weight
+                  </th>
+                  <th>
+                    Status
                   </th>
                   <th class="text-center" data-orderable="false">
                     Actions
@@ -70,23 +76,25 @@
                 </tr>
               </thead>
               <tbody>
-                @foreach($vehicles as $serial => $vehicle)
-                <tr>
+                @foreach($subscriptions as $serial => $subscription)
+                <tr @if ($subscription->notify_subscribed == '1') style="background-color:#F2F3F4" @endif>
                   <td>{{ $serial + 1 }}</td>
-                  <td>{{ $vehicle->name }}</td>
-                  <td>{{ $vehicle->number_plate }}</td>
-                  <td>{{ $vehicle->ownership }}</td>
-                  <td>{{ $vehicle->type }}</td>
+                  <td>{{ $subscription->user->name }}</td>
+                  <td>{{ $subscription->subscription->name }}</td>
+                  <td>{{ \Carbon\Carbon::parse($subscription->start_date)->format('d M Y') }}</td>
+                  <td>{{ \Carbon\Carbon::parse($subscription->end_date)->format('d M Y') }}</td>
+                  <td>{{ number_format($subscription->remaining_weight, 2) }} kg</td>
+                  <td>{{ $subscription->status }}</td>
                   <td class="text-center">  
-                      @can('Edit Vehicle')
-                        <a title="Edit" href="{{ url('vehicle/edit/'.encrypt($vehicle->id)) }}">
+                      @can('Edit User Subscription')
+                        <a title="Edit" href="{{ url('user-subscription/edit/'.encrypt($subscription->id)) }}">
                           <button type="button" class="btn btn-primary btn-icon">
                             <i data-feather="edit"></i>
                           </button>
                         </a>
                       @endcan                  
                       
-                      @can('Delete Vehicle')
+                      @can('Delete User Subscription')
                         <a title="Delete" data-toggle="modal" data-target="#actionModal{{$serial}}">
                           <button type="button" class="btn btn-primary btn-icon">
                             <i data-feather="trash-2"></i>
@@ -102,15 +110,33 @@
                                 </button>
                               </div>
                               <div class="modal-body">
-                                Are you sure you want to delete this vehicle?
+                                Are you sure you want to delete this subscription?
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <a href="{{ url('vehicle/destroy/'.encrypt($vehicle->id)) }}" type="button" class="btn btn-primary">Yes</a>
+                                <a href="{{ url('user-subscription/destroy/'.encrypt($subscription->id)) }}" type="button" class="btn btn-primary">Yes</a>
                               </div>
                             </div>
                           </div>
                         </div>
+                      @endcan
+                      @can('Renewal Mail User Subscription')
+                      @if (!$subscription->end_date->gte(\Carbon\Carbon::now()))
+                        <a title="Renew" href="{{ url('user-subscription/mail/'.encrypt($subscription->id)) }}">
+                          <button type="button" class="btn btn-primary btn-icon">
+                            <i data-feather="mail"></i>
+                          </button>
+                        </a>
+                      @endif
+                      @endcan
+                      @can('Acknowledge User Subscription')
+                      @if ($subscription->notify_subscribed == '1')
+                        <a title="Acknowledge" href="{{ url('user-subscription/acknowledge/'.encrypt($subscription->id)) }}">
+                          <button type="button" class="btn btn-primary btn-icon">
+                            <i data-feather="eye-off"></i>
+                          </button>
+                        </a>
+                      @endif
                       @endcan
                   </td>
                 </tr>

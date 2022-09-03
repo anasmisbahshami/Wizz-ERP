@@ -46,7 +46,7 @@ Route::group(['middleware' => 'auth', 'prevent-back-history'], function () {
     Route::post('/vehicle/update/{id}', [App\Http\Controllers\VehicleController::class, 'update'])->middleware('can:Edit Vehicle');
     Route::get('/vehicle/destroy/{id}', [App\Http\Controllers\VehicleController::class, 'destroy'])->middleware('can:Delete Vehicle');
 
-    //Vehicle Routes
+    //Routeway Routes
     Route::get('/route/view', [App\Http\Controllers\RouteController::class, 'view'])->middleware('can:View Route');
     Route::get('/route/add', [App\Http\Controllers\RouteController::class, 'create'])->middleware('can:Add Route');
     Route::post('/route/store', [App\Http\Controllers\RouteController::class, 'store'])->middleware('can:Add Route');
@@ -55,5 +55,22 @@ Route::group(['middleware' => 'auth', 'prevent-back-history'], function () {
     Route::get('/route/destroy/{id}', [App\Http\Controllers\RouteController::class, 'destroy'])->middleware('can:Delete Route');
     Route::post('/city/store', [App\Http\Controllers\RouteController::class, 'city_store'])->middleware('can:Add City');
 
+    //Subscription Routes
+    Route::get('/subscription/view', [App\Http\Controllers\SubscriptionController::class, 'view'])->middleware('can:View Subscription');
+    Route::get('/subscription/add', [App\Http\Controllers\SubscriptionController::class, 'create'])->middleware('can:Add Subscription');
+    Route::post('/subscription/store', [App\Http\Controllers\SubscriptionController::class, 'store'])->middleware('can:Add Subscription');
+    Route::get('/subscription/edit/{id}', [App\Http\Controllers\SubscriptionController::class, 'edit'])->middleware('can:Edit Subscription');
+    Route::post('/subscription/update/{id}', [App\Http\Controllers\SubscriptionController::class, 'update'])->middleware('can:Edit Subscription');
+    Route::get('/subscription/destroy/{id}', [App\Http\Controllers\SubscriptionController::class, 'destroy'])->middleware('can:Delete Subscription');
+
+    //User Subscription Routes
+    Route::get('/user-subscription/view', [App\Http\Controllers\UserSubscriptionController::class, 'view'])->middleware('can:View User Subscription');
+    Route::get('/user-subscription/add', [App\Http\Controllers\UserSubscriptionController::class, 'create'])->middleware('can:Add User Subscription');
+    Route::post('/user-subscription/store', [App\Http\Controllers\UserSubscriptionController::class, 'store'])->middleware('can:Add User Subscription');
+    Route::get('/user-subscription/edit/{id}', [App\Http\Controllers\UserSubscriptionController::class, 'edit'])->middleware('can:Edit User Subscription');
+    Route::post('/user-subscription/update/{id}', [App\Http\Controllers\UserSubscriptionController::class, 'update'])->middleware('can:Edit User Subscription');
+    Route::get('/user-subscription/destroy/{id}', [App\Http\Controllers\UserSubscriptionController::class, 'destroy'])->middleware('can:Delete User Subscription');
+    Route::get('/user-subscription/mail/{id}', [App\Http\Controllers\UserSubscriptionController::class, 'renew_mail'])->middleware('can:Renewal Mail User Subscription');
+    Route::get('/user-subscription/acknowledge/{id}', [App\Http\Controllers\UserSubscriptionController::class, 'acknowledge'])->middleware('can:Acknowledge User Subscription');
 
 });

@@ -20,6 +20,8 @@ class CreateUserSubscriptionsTable extends Migration
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->string('remaining_weight')->nullable();
+            $table->string('status')->nullable()->default('Subscribed');
+            $table->string('notify_subscribed')->nullable()->default('0');
             $table->timestamps();
         });
     }

@@ -8,11 +8,11 @@
 @section('content')
   <nav class="page-breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{{ url('user/view') }}">Users</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Edit</li>
+      <li class="breadcrumb-item"><a href="{{ url('subscription/view') }}">Subscription</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Add</li>
     </ol>
   </nav>
-  
+
   @if ($message = Session::get('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
       <strong>Success!</strong> {{ $message }}
@@ -21,39 +21,36 @@
       </button>
     </div>
   @endif
-
+  
   <div class="row">
     <div class="col-md-12 grid-margin stretch-card">
       <div class="card">
         <div class="card-body">
-          <h6 class="card-title">Edit User</h6>
-           <form method="POST" action="{{ url('user/update/'.encrypt($user->id)) }}" class="forms-sample" enctype="multipart/form-data">
+          <h6 class="card-title">Create a New Subscription</h6>
+           <form method="POST" action="{{ url('subscription/store') }}" class="forms-sample" enctype="multipart/form-data">
             @csrf
             <div class="row">
-              <div class="form-group col-md-6">
-                <label for="name">User Name <span style="color:red;"> *</span></label>
-                <input required type="text" class="form-control" id="name" name="name" autocomplete="off" value="{{ $user->name }}">
+              <div class="form-group col-md-4">
+                <label for="name">Name<span style="color:red;"> *</span></label>
+                <input required type="text" class="form-control" id="name" name="name" autocomplete="off" placeholder="Gold">
               </div>
-              <div class="form-group col-md-6">
-                <label for="email">Email <span style="color:red;"> *</span></label>
-                <input required type="email" class="form-control" id="email" name="email" value="{{ $user->email }}">
+              <div class="form-group col-md-4">
+                <label for="email">Price<span style="color:red;"> *</span></label>
+                <input required type="number" step="any" class="form-control" id="price" name="price" placeholder="Rs 10,000">
               </div>
-              <div class="form-group col-md-6">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Leave empty if you want to keep old the password">
+              <div class="form-group col-md-4">
+                <label for="email">Weight<span style="color:red;"> *</span></label>
+                <input required type="number" step="any" class="form-control" id="weight" name="weight" placeholder="100.00 Kg">
               </div>
-              <div class="form-group col-md-6">
-                <label for="role">Select Role for this User</label>
-                <select  class="js-example-basic-single w-100" id="role" name="role">
-                  <option selected value="">Select</option>
-                  @foreach($roles as $role)
-                  <option @if($user->roles[0]->name == $role->name) selected @endif>{{ $role->name }}</option>
-                  @endforeach
-                </select>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-12">
+                <label for="role">Description<span style="color:red;"> *</span></label>
+                <textarea class="form-control" placeholder="Nation Wide Delivery, Weight Upto 100 Kg, 30 Days Validation" required name="description" id="description" cols="30" rows="5"></textarea>
               </div>
-            </div>  
-            <button type="submit" class="btn btn-primary mr-2">Update</button>
-            <a class="btn btn-light"  href="{{ url('user/view') }}">Cancel</a>
+            </div>
+            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+            <a class="btn btn-light"  href="{{ url('subscription/view') }}">Cancel</a>
           </form>
         </div>
       </div>
