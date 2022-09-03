@@ -25,10 +25,17 @@ class PermissionSeeder extends Seeder
             ['name' => 'View Role','guard_name' => 'web',],
             ['name' => 'Edit Role','guard_name' => 'web',],
             ['name' => 'Delete Role','guard_name' => 'web',],
+
             ['name' => 'Add User','guard_name' => 'web',],
             ['name' => 'View User','guard_name' => 'web',],
             ['name' => 'Edit User','guard_name' => 'web',],
             ['name' => 'Delete User','guard_name' => 'web',],
+
+            ['name' => 'Add Vehicle','guard_name' => 'web',],
+            ['name' => 'View Vehicle','guard_name' => 'web',],
+            ['name' => 'Edit Vehicle','guard_name' => 'web',],
+            ['name' => 'Delete Vehicle','guard_name' => 'web',],
+
         ]);
 
         //Super Admin

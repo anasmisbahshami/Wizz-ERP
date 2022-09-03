@@ -37,4 +37,16 @@ Route::group(['middleware' => 'auth', 'prevent-back-history'], function () {
     Route::get('/user/edit/{id}', [App\Http\Controllers\UserController::class, 'edit'])->middleware('can:Edit User');
     Route::post('/user/update/{id}', [App\Http\Controllers\UserController::class, 'update'])->middleware('can:Edit User');
     Route::get('/user/destroy/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->middleware('can:Delete User');
+
+    //Vehicle Routes
+    Route::get('/vehicle/view', [App\Http\Controllers\VehicleController::class, 'view'])->middleware('can:View Vehicle');
+    Route::get('/vehicle/add', [App\Http\Controllers\VehicleController::class, 'create'])->middleware('can:Add Vehicle');
+    Route::post('/vehicle/store', [App\Http\Controllers\VehicleController::class, 'store'])->middleware('can:Add Vehicle');
+    Route::get('/vehicle/edit/{id}', [App\Http\Controllers\VehicleController::class, 'edit'])->middleware('can:Edit Vehicle');
+    Route::post('/vehicle/update/{id}', [App\Http\Controllers\VehicleController::class, 'update'])->middleware('can:Edit Vehicle');
+    Route::get('/vehicle/destroy/{id}', [App\Http\Controllers\VehicleController::class, 'destroy'])->middleware('can:Delete Vehicle');
+
+
+
+
 });
