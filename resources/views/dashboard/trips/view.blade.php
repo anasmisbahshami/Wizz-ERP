@@ -8,7 +8,7 @@
 @section('content')
   <nav class="page-breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{{ url('vehicle/view') }}">Vehicles</a></li>
+      <li class="breadcrumb-item"><a href="{{ url('trip/view') }}">Trips</a></li>
       <li class="breadcrumb-item active" aria-current="page">View</li>
     </ol>
   </nav>
@@ -37,11 +37,11 @@
         <div class="card-body">
           <div class="row">
             <div class="col-md-6">
-              <h6 class="card-title">Vehicles List</h6>
+              <h6 class="card-title">Trips List</h6>
             </div>
-            @can('Add Vehicle')
+            @can('Add Trip')
               <div class="col-md-6">
-                <a href="{{ url('vehicle/add') }}" type="button" class="btn btn-primary" style="float:right;">Add Vehicle</a>
+                <a href="{{ url('trip/add') }}" type="button" class="btn btn-primary" style="float:right;">Add Trip</a>
               </div>
             @endcan
           </div>
@@ -53,19 +53,25 @@
                     #
                   </th>
                   <th>
-                    Name
+                    Vehicle
+                  </th>
+                  <th>
+                    Route
                   </th>
                   <th>
                     Driver
                   </th>
                   <th>
-                    Reg No.
+                    Nature
                   </th>
                   <th>
-                    Ownership
+                    Date
                   </th>
                   <th>
-                    Type
+                    Rate
+                  </th>
+                  <th>
+                    Status
                   </th>
                   <th class="text-center" data-orderable="false">
                     Actions
@@ -73,24 +79,25 @@
                 </tr>
               </thead>
               <tbody>
-                @foreach($vehicles as $serial => $vehicle)
-                <tr>
+                @foreach($trips as $serial => $trip)
+                <tr @if ($trip->notify_complete == '1' || $trip->notify_start == '1') style="background-color:#F2F3F4;" @endif>
                   <td>{{ $serial + 1 }}</td>
-                  <td>{{ $vehicle->name }}</td>
-                  <td>{{ $vehicle->driver->name }}</td>
-                  <td>{{ $vehicle->number_plate }}</td>
-                  <td>{{ $vehicle->ownership }}</td>
-                  <td>{{ $vehicle->type }}</td>
+                  <td>{{ $trip->vehicle->name }}</td>
+                  <td>{{ $trip->route->name }}</td>
+                  <td>{{ $trip->vehicle->driver->name }}</td>
+                  <td>{{ $trip->vehicle->type }}</td>
+                  <td>{{ \Carbon\Carbon::parse($trip->date)->format('d M Y') }}</td>
+                  <td>Rs {{ number_format($trip->rate, 2) }}</td>
+                  <td>{{ $trip->status }}</td>
                   <td class="text-center">  
-                      @can('Edit Vehicle')
-                        <a title="Edit" href="{{ url('vehicle/edit/'.encrypt($vehicle->id)) }}">
-                          <button type="button" class="btn btn-primary btn-icon">
+                      @can('Edit Trip')
+                        <a title="Edit" @if ($trip->status == 'Completed') style="pointer-events: none;" @endif href="{{ url('trip/edit/'.encrypt($trip->id)) }}">
+                          <button @if ($trip->status == 'Completed') disabled @endif type="button" class="btn btn-primary btn-icon">
                             <i data-feather="edit"></i>
                           </button>
                         </a>
-                      @endcan                  
-                      
-                      @can('Delete Vehicle')
+                      @endcan
+                      @can('Delete Trip')
                         <a title="Delete" data-toggle="modal" data-target="#actionModal{{$serial}}">
                           <button type="button" class="btn btn-primary btn-icon">
                             <i data-feather="trash-2"></i>
@@ -106,15 +113,24 @@
                                 </button>
                               </div>
                               <div class="modal-body">
-                                Are you sure you want to delete this vehicle?
+                                Are you sure you want to delete this trip?
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <a href="{{ url('vehicle/destroy/'.encrypt($vehicle->id)) }}" type="button" class="btn btn-primary">Yes</a>
+                                <a href="{{ url('trip/destroy/'.encrypt($trip->id)) }}" type="button" class="btn btn-primary">Yes</a>
                               </div>
                             </div>
                           </div>
                         </div>
+                      @endcan
+                      @can('Acknowledge Trip')
+                      @if ($trip->notify_complete == '1' || $trip->notify_start == '1')
+                        <a title="Acknowledge" href="{{ url('trip/acknowledge/'.encrypt($trip->id)) }}">
+                          <button type="button" class="btn btn-primary btn-icon">
+                            <i data-feather="eye-off"></i>
+                          </button>
+                        </a>
+                      @endif
                       @endcan
                   </td>
                 </tr>

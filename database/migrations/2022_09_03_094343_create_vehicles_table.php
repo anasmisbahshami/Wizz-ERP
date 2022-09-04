@@ -20,6 +20,7 @@ class CreateVehiclesTable extends Migration
             $table->string('ownership')->nullable();
             $table->string('type')->nullable();
             $table->string('gps_id')->nullable();
+            $table->string('driver_id')->nullable();
             $table->timestamps();
         });
     }

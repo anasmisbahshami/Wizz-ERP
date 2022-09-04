@@ -54,6 +54,15 @@ class PermissionSeeder extends Seeder
             ['name' => 'Delete User Subscription','guard_name' => 'web',],
             ['name' => 'Renewal Mail User Subscription','guard_name' => 'web',],
             ['name' => 'Acknowledge User Subscription','guard_name' => 'web',],
+
+            ['name' => 'Add Trip','guard_name' => 'web',],
+            ['name' => 'View Trip','guard_name' => 'web',],
+            ['name' => 'Edit Trip','guard_name' => 'web',],
+            ['name' => 'Delete Trip','guard_name' => 'web',],
+            ['name' => 'Acknowledge Trip','guard_name' => 'web',],
+
+            ['name' => 'View Bill','guard_name' => 'web',],
+            ['name' => 'Generate Bill','guard_name' => 'web',],
         ]);
 
         //Super Admin

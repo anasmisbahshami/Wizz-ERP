@@ -88,20 +88,20 @@
             @endcanany
 
             {{-- Automated Manager --}}
-            @canany(['View Role', 'View User'])
+            @canany(['View Trip', 'View Bill'])
                 <li class="nav-item nav-category">Automated Manager</li>
-                @canany(['View Role'])
-                    <li class="nav-item {{ active_class(['role/*']) }}">
-                        <a href="{{ url('role/view') }}" class="nav-link">
+                @canany(['View Trip'])
+                    <li class="nav-item {{ active_class(['trip/*']) }}">
+                        <a href="{{ url('trip/view') }}" class="nav-link">
                             <i class="link-icon fa fa-sign-in"></i>
-                            <span class="link-title">Trip Entry</span>
+                            <span class="link-title">Trip Records</span>
                         </a>
                     </li>
                 @endcanany
 
-                @canany(['View User'])
-                    <li class="nav-item {{ active_class(['user/*']) }}">
-                        <a href="{{ url('user/view') }}" class="nav-link">
+                @canany(['View Bill'])
+                    <li class="nav-item {{ active_class(['bill/*']) }}">
+                        <a href="{{ url('bill/view') }}" class="nav-link">
                             <i class="link-icon" data-feather="printer"></i>
                             <span class="link-title">Generate Bill</span>
                         </a>

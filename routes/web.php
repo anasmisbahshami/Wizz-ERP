@@ -73,4 +73,20 @@ Route::group(['middleware' => 'auth', 'prevent-back-history'], function () {
     Route::get('/user-subscription/mail/{id}', [App\Http\Controllers\UserSubscriptionController::class, 'renew_mail'])->middleware('can:Renewal Mail User Subscription');
     Route::get('/user-subscription/acknowledge/{id}', [App\Http\Controllers\UserSubscriptionController::class, 'acknowledge'])->middleware('can:Acknowledge User Subscription');
 
+    //Trip Routes
+    Route::get('/trip/view', [App\Http\Controllers\TripController::class, 'view'])->middleware('can:View Trip');
+    Route::get('/trip/add', [App\Http\Controllers\TripController::class, 'create'])->middleware('can:Add Trip');
+    Route::post('/trip/store', [App\Http\Controllers\TripController::class, 'store'])->middleware('can:Add Trip');
+    Route::get('/trip/edit/{id}', [App\Http\Controllers\TripController::class, 'edit'])->middleware('can:Edit Trip');
+    Route::post('/trip/update/{id}', [App\Http\Controllers\TripController::class, 'update'])->middleware('can:Edit Trip');
+    Route::get('/trip/destroy/{id}', [App\Http\Controllers\TripController::class, 'destroy'])->middleware('can:Delete Trip');
+    Route::post('/trip/get/rate', [App\Http\Controllers\TripController::class, 'get_rate'])->name('getRate')->middleware('can:Add Trip');
+    Route::get('/trip/acknowledge/{id}', [App\Http\Controllers\TripController::class, 'acknowledge'])->middleware('can:Acknowledge Trip');
+
+    //Bill Routes
+    Route::get('/bill/view', [App\Http\Controllers\BillController::class, 'view'])->middleware('can:View Bill');
+    Route::post('/bill/generate', [App\Http\Controllers\BillController::class, 'generate'])->middleware('can:Generate Bill');
+
+
+
 });

@@ -45,7 +45,18 @@
             </div>
 
             <div class="row">
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-4">
+                <label for="role">Driver<span style="color:red;"> *</span></label>
+                <select required class="js-example-basic-single w-100" id="driver_id" name="driver_id">
+                  <option selected value="">Select</option>
+                  @foreach (\App\Models\User::role('driver')->get() as $driver)
+                    @if (empty($driver->vehicle))
+                      <option value="{{ $driver->id }}">{{$driver->name}}</option>
+                    @endif
+                  @endforeach
+                </select>
+              </div>
+              <div class="form-group col-md-4">
                 <label for="role">Ownership<span style="color:red;"> *</span></label>
                 <select required class="js-example-basic-single w-100" id="ownership" name="ownership">
                   <option selected value="">Select</option>
@@ -53,7 +64,7 @@
                   <option value="Vendor">Vendor</option>
                 </select>
               </div>
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-4">
                 <label for="role">Vehicle Type<span style="color:red;"> *</span></label>
                 <select required class="js-example-basic-single w-100" id="type" name="type">
                   <option selected value="">Select</option>

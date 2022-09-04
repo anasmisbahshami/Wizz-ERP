@@ -1,5 +1,15 @@
 @php
   $NewSubsciptions = \App\Models\UserSubscription::where('notify_subscribed', '1')->get();
+  $TripStarted = \App\Models\Trip::where('notify_start', '1')->get();
+  $TripFinish = \App\Models\Trip::where('notify_complete', '1')->get();
+  
+  $DriverStartTrip = 0;
+  foreach ($TripStarted as $key => $trip) {
+    if ($trip->vehicle->driver->id == Auth::id()) {
+      $DriverStartTrip++;
+    }
+  }
+  
 @endphp
 
 <nav class="navbar">
@@ -8,23 +18,27 @@
   </a>
   <div class="navbar-content">
     <ul class="navbar-nav">
-      @role('Super Admin')
+
+      <!-- Notifications for Super Admin & Admin -->
+      @hasanyrole('Super Admin|Admin')
       <li style="margin-right:15px;" class="nav-item dropdown nav-notifications">
         <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i data-feather="bell"></i>
-          <div @if(count($NewSubsciptions)) class="indicator" @endif>
+          <div @if(count($NewSubsciptions) || count($TripStarted) || count($TripFinish) ) class="indicator" @endif>
             <div class="circle"></div>
           </div>
         </a>
         <div class="dropdown-menu" aria-labelledby="notificationDropdown">
           <div class="dropdown-header d-flex align-items-center justify-content-between">
-            <p class="mb-0 font-weight-medium">{{ count($NewSubsciptions) }} New Notifications</p>
+            <p class="mb-0 font-weight-medium">{{ count($NewSubsciptions) + count($TripStarted) + count($TripFinish) }} New Notifications</p>
           </div>
           <div class="dropdown-body">
+            
+            <!-- New Subscriptions Notifications-->
             @foreach($NewSubsciptions as $serial => $subscription)
             <a href="{{ url('/user-subscription/view')}}" class="dropdown-item">
               <div class="icon">
-                <i data-feather="trello"></i>
+                <i data-feather="shopping-bag"></i>
               </div>
               <div class="content">
                 <p>{{ $subscription->user->name }} subscribed for {{ $subscription->subscription->name }} Bucket!</p>
@@ -32,31 +46,91 @@
               </div>
             </a>
           @endforeach
+
+          <!-- Trip Start Notifications-->
+          @foreach($TripStarted as $serial => $tripStart)
+          <a href="{{ url('/trip/view')}}" class="dropdown-item">
+            <div class="icon">
+              <i data-feather="truck"></i>
+            </div>
+            <div class="content">
+              <p>{{ $tripStart->vehicle->name }} trip started for {{ $tripStart->route->name }}!</p>
+              <p class="sub-text text-muted">{{ $tripStart->created_at->diffForHumans() }}</p>
+            </div>
+          </a>
+          @endforeach
+        
+        <!-- Trip Finish Notifications-->
+        @foreach($TripFinish as $serial => $tripFinish)
+        <a href="{{ url('/trip/view')}}" class="dropdown-item">
+          <div class="icon">
+            <i data-feather="check-square"></i>
+          </div>
+          <div class="content">
+            <p>{{ $tripFinish->vehicle->name }} trip completed for {{ $tripFinish->route->name }}!</p>
+            <p class="sub-text text-muted">{{ $tripFinish->updated_at->diffForHumans() }}</p>
+          </div>
+        </a>
+        @endforeach
+
+        <!-- If Empty Notifications-->
+        @if ($TripFinish->isEmpty() && $TripStarted->isEmpty() && $NewSubsciptions->isEmpty())
+        <a class="dropdown-item">
+          <div class="content">
+            <p>No New Notifications</p>
+          </div>
+        </a>                
+        @endif
+
           </div>
         </div>
       </li>
-    @else
+      @endhasanyrole
+
+      <!-- Notifications for Driver -->
+      @hasrole('Driver')
       <li style="margin-right:15px;" class="nav-item dropdown nav-notifications">
         <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i data-feather="bell"></i>
-          <div @if(0) class="indicator" @endif>
+          <div @if($DriverStartTrip) class="indicator" @endif>
             <div class="circle"></div>
           </div>
         </a>
         <div class="dropdown-menu" aria-labelledby="notificationDropdown">
           <div class="dropdown-header d-flex align-items-center justify-content-between">
-            <p class="mb-0 font-weight-medium">0 New Notifications</p>
+            <p class="mb-0 font-weight-medium">{{ $DriverStartTrip }} New Notifications</p>
           </div>
           <div class="dropdown-body">
-            <a class="dropdown-item">
-              <div class="content">
-                <p>No New Notifications</p>
-              </div>
-            </a>
+
+          <!-- Trip Start Notifications-->
+          @foreach($TripStarted as $serial => $tripStart)
+            @if ($tripStart->vehicle->driver->id == Auth::id())
+              <a href="{{ url('/trip/view')}}" class="dropdown-item">
+                <div class="icon">
+                  <i data-feather="truck"></i>
+                </div>
+                <div class="content">
+                  <p>You have been assigned a trip from {{ $tripStart->route->name }} with {{ $tripStart->vehicle->name }}!</p>
+                  <p class="sub-text text-muted">{{ $tripStart->created_at->diffForHumans() }}</p>
+                </div>
+              </a>      
+            @endif
+          @endforeach
+
+          <!-- If Empty Notifications-->
+          @if ($TripStarted->isEmpty())
+          <a class="dropdown-item">
+            <div class="content">
+              <p>No New Notifications</p>
+            </div>
+          </a>                
+          @endif
+
           </div>
         </div>
       </li>
-    @endrole
+      @endhasrole
+
       <li class="nav-item dropdown nav-profile">
         <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <img src="{{asset('assets/images/'.Auth::user()->image)}}" alt="profile">

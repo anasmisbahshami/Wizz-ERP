@@ -19,6 +19,9 @@ class CreateTripsTable extends Migration
             $table->string('route_id')->nullable();
             $table->date('date')->nullable();
             $table->string('rate')->nullable();
+            $table->string('status')->nullable()->default('In Progress');
+            $table->string('notify_start')->nullable()->default('0');
+            $table->string('notify_complete')->nullable()->default('0');
             $table->timestamps();
         });
     }
