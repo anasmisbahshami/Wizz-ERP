@@ -87,4 +87,12 @@ Route::group(['middleware' => 'auth', 'prevent-back-history'], function () {
     Route::get('/bill/view', [App\Http\Controllers\BillController::class, 'view'])->middleware('can:View Bill');
     Route::post('/bill/generate/monthly/statement', [App\Http\Controllers\BillController::class, 'monthly_generate'])->middleware('can:Generate Monthly Bill');
     Route::post('/bill/generate/monthly/range/statement', [App\Http\Controllers\BillController::class, 'monthly_range_generate'])->middleware('can:Generate Monthly Range Bill');
+
+    //Order Booking
+    Route::get('/order-book/view', [App\Http\Controllers\OrderBookingController::class, 'view'])->middleware('can:Book Order');
+    Route::get('/order-book/add/{id}', [App\Http\Controllers\OrderBookingController::class, 'add'])->middleware('can:Book Order');
+    Route::post('/order-book/subscription/details', [App\Http\Controllers\OrderBookingController::class, 'subscription_details'])->name('getSubscriptionDetails')->middleware('can:Book Order');
+    Route::post('/order-book/normal/details', [App\Http\Controllers\OrderBookingController::class, 'normal_details'])->name('getNormalDetails')->middleware('can:Book Order');
+
+    
 });

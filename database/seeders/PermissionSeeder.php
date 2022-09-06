@@ -64,6 +64,9 @@ class PermissionSeeder extends Seeder
             ['name' => 'View Bill','guard_name' => 'web',],
             ['name' => 'Generate Monthly Bill','guard_name' => 'web',],
             ['name' => 'Generate Monthly Range Bill','guard_name' => 'web',],
+
+            ['name' => 'Book Order','guard_name' => 'web',],
+            
         ]);
 
         //Super Admin
