@@ -154,7 +154,7 @@
 
        $.post('{{ route('getNormalDetails') }}', {_token:'{{ csrf_token() }}', email:email}, function(data){
         if(data.success == true){
-            window.location.replace(APP_URL+'/order-book/add/'+data.user_id);
+            window.location.replace(APP_URL+'/order-book/add/'+data.order_id);
         }else{
             alert(data.msg);
             }
@@ -174,7 +174,7 @@
         if (data.remaining_weight > 0 && data.valid_upto_result) {
             $('#PlaceOrderButton').show();
             $('#PlaceOrderButton').html(
-                '<a href="/order-book/add/'+data.user_id+'" style="background-color: #838383;color:white;" class="btn mt-4" class="btn btn-icon-text"><i class="btn-icon-prepend" data-feather="check-square"></i>Place Order</a>'
+                '<a href="/order-book/add/'+data.order_id+'" style="background-color: #838383;color:white;" class="btn mt-4" class="btn btn-icon-text"><i class="btn-icon-prepend" data-feather="check-square"></i>Place Order</a>'
             );  
         }else{
             $('#PlaceOrderButton').show();

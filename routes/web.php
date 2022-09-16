@@ -91,6 +91,8 @@ Route::group(['middleware' => 'auth', 'prevent-back-history'], function () {
     //Order Booking
     Route::get('/order-book/view', [App\Http\Controllers\OrderBookingController::class, 'view'])->middleware('can:Book Order');
     Route::get('/order-book/add/{id}', [App\Http\Controllers\OrderBookingController::class, 'add'])->middleware('can:Book Order');
+    Route::post('/order-book/item/store', [App\Http\Controllers\OrderBookingController::class, 'add_order_item'])->middleware('can:Book Order');
+    
     Route::post('/order-book/subscription/details', [App\Http\Controllers\OrderBookingController::class, 'subscription_details'])->name('getSubscriptionDetails')->middleware('can:Book Order');
     Route::post('/order-book/normal/details', [App\Http\Controllers\OrderBookingController::class, 'normal_details'])->name('getNormalDetails')->middleware('can:Book Order');
 
