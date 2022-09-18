@@ -54,7 +54,106 @@ class OrderBookingController extends Controller
 
         return redirect()->back()->with('success', 'Order Item Added Successfully!');
     }
-    
+
+    public function update(Request $request, $id)
+    {   
+        $id = decrypt($id);
+        $orderItem = OrderItem::find($id);
+
+        $order = Order::find($orderItem->order_id);
+        $OrderWeight = $request->weight*$request->quantity;
+
+    //Checking Order Type
+    if ($order->type == 'Subscription') {
+        $user_subscription = $order->user_subscription;
+        
+        //Checking if OrderItem Weight is < TotalRenewed Weight     
+        if ($orderItem->weight < $OrderWeight) {
+            $extraWeight = $OrderWeight - $orderItem->weight;
+
+            //Updating OrderItem if User is Subscribed & Has Remaining Weight > TotalRenewed Weight 
+            if (!($user_subscription->status == 'Subscribed' && $user_subscription->remaining_weight >= $extraWeight)) {
+                return redirect()->back()->with('warning', 'Either Subscription is Expired or Remaining Weight is not sufficent!');
+            }
+            
+            //Subtracting Extra Weight from User Subscription Weight
+            $user_subscription->update([
+                'remaining_weight' => $user_subscription->remaining_weight - $extraWeight
+            ]); 
+        }
+
+        //Checking if OrderItem Weight is < TotalRenewed Weight     
+        elseif($orderItem->weight > $OrderWeight){
+            $extraWeight = $orderItem->weight - $OrderWeight;
+                
+            //Updating OrderItem if User is Subscribed 
+            if (!($user_subscription->status == 'Subscribed')) {
+                return redirect()->back()->with('warning', 'Your Subscription is Expired!');
+            }
+
+            //Adding Extra Weight to User Subscription Weight
+            $user_subscription->update([
+                'remaining_weight' => $user_subscription->remaining_weight + $extraWeight
+            ]);
+        }
+    }
+
+        $orderItem->name = $request->name;
+        $orderItem->weight = $OrderWeight;
+        $orderItem->quantity = $request->quantity;
+        $orderItem->vehicle_id = $request->vehicle_id;
+        $orderItem->route_id = $request->route_id;
+        $orderItem->price = $request->rate;
+        $orderItem->delivery_address = $request->delivery_address;
+        $orderItem->save();
+
+        return redirect()->back()->with('success', 'Order Item Updated Successfully!');
+    }
+
+    public function complete_order($id)
+    {
+        $id = decrypt($id);
+        $order = Order::find($id);
+        $order->status = 'Invoice Generated';
+        $order->save();
+
+        return redirect('/order/view');
+    }
+
+    public function destroy_order($id)
+    {
+        $id = decrypt($id);
+        $order = Order::find($id);
+
+        if ($order->type == 'Subscription') {
+            $user_subscription = $order->user_subscription;
+            $UsedWeight = $order->items->sum('weight');
+
+            //Adding Used Weight to User Subscription Weight
+            $user_subscription->update([
+                'remaining_weight' => $user_subscription->remaining_weight + $UsedWeight
+            ]);
+        }
+        
+        //Deleting OrderItems
+        foreach ($order->items as $item) {
+            $item->delete();
+        }
+
+        //Deleting Order
+        $order->delete();
+
+        return redirect('/order-book/view');
+    }
+
+    public function destroy($id)
+    {
+        $id = decrypt($id);
+        OrderItem::find($id)->delete();
+
+        return redirect()->back()->with('success', 'Order Item Removed Successfully!');
+    }
+
     public function normal_details(Request $request)
     {
         $user = User::where('email',$request->email)->first();

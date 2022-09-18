@@ -19,6 +19,8 @@ class CreateOrdersTable extends Migration
             $table->string('tracking_code')->nullable();
             $table->string('type')->nullable();
             $table->string('status')->nullable()->default('Unpaid');
+            $table->string('notify_paid')->nullable()->default('0');
+            $table->string('notify_complete')->nullable()->default('0');
             $table->timestamps();
         });
     }

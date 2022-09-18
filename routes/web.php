@@ -88,13 +88,19 @@ Route::group(['middleware' => 'auth', 'prevent-back-history'], function () {
     Route::post('/bill/generate/monthly/statement', [App\Http\Controllers\BillController::class, 'monthly_generate'])->middleware('can:Generate Monthly Bill');
     Route::post('/bill/generate/monthly/range/statement', [App\Http\Controllers\BillController::class, 'monthly_range_generate'])->middleware('can:Generate Monthly Range Bill');
 
+    //Order Routes
+    Route::get('/order/view', [App\Http\Controllers\OrderController::class, 'view'])->middleware('can:View Order');
+
+
     //Order Booking
     Route::get('/order-book/view', [App\Http\Controllers\OrderBookingController::class, 'view'])->middleware('can:Book Order');
-    Route::get('/order-book/add/{id}', [App\Http\Controllers\OrderBookingController::class, 'add'])->middleware('can:Book Order');
+    Route::get('/order-book/add/{id}', [App\Http\Controllers\OrderBookingController::class, 'add'])->middleware('can:Book Order');    
+    Route::get('/order-book/destroy/{id}', [App\Http\Controllers\OrderBookingController::class, 'destroy_order'])->middleware('can:Book Order');
     Route::post('/order-book/item/store', [App\Http\Controllers\OrderBookingController::class, 'add_order_item'])->middleware('can:Book Order');
-    
+    Route::get('/order-book/complete/{id}', [App\Http\Controllers\OrderBookingController::class, 'complete_order'])->middleware('can:Book Order');
+    Route::get('/order-book/item/destroy/{id}', [App\Http\Controllers\OrderBookingController::class, 'destroy'])->middleware('can:Book Order');
+    Route::post('/order-book/item/update/{id}', [App\Http\Controllers\OrderBookingController::class, 'update'])->middleware('can:Book Order');
     Route::post('/order-book/subscription/details', [App\Http\Controllers\OrderBookingController::class, 'subscription_details'])->name('getSubscriptionDetails')->middleware('can:Book Order');
     Route::post('/order-book/normal/details', [App\Http\Controllers\OrderBookingController::class, 'normal_details'])->name('getNormalDetails')->middleware('can:Book Order');
 
-    
 });

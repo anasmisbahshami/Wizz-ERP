@@ -83,8 +83,8 @@
                   <input type="hidden" name="order_id" value="{{ $order->id }}">
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary mr-2">Submit</button>
-            <a class="btn btn-light"  href="{{ url('order-book/view') }}">Cancel</a>
+            <button type="submit" class="btn btn-primary mr-2">Add</button>
+            <a class="btn btn-light"  href="{{ url('/order-book/destroy/'.encrypt($order->id)) }}">Cancel</a>
           </form>
         </div>
       </div>
@@ -101,7 +101,7 @@
               <h6 class="card-title">Order Items</h6>
             </div>
             <div class="col-md-6">
-              <a href="{{ url('') }}" type="button" class="btn btn-success" style="float:right;">Complete Order</a>
+              <a href="{{ url('/order-book/complete/'.encrypt($order->id)) }}" type="button" class="btn btn-success" style="float:right;">Complete Order</a>
             </div>
           </div>
 
@@ -126,13 +126,80 @@
                   <td class="text-center">{{ \App\Models\Vehicle::find($item->vehicle_id)->name }}</td>
                   <td class="text-center">{{ \App\Models\Route::find($item->route_id)->name }}</td>
                   <td class="text-center">Rs {{ number_format($item->price, 2) }}</td>
-                  <td class="text-center">{{ number_format($item->weight, 2) }}</td>
+                  <td class="text-center">{{ number_format($item->weight, 2) }} Kg</td>
                   <td class="text-center">
-                        <a title="Edit" href="{{ url('') }}">
+                        <a title="Edit" data-toggle="modal" data-target="#EditModal{{$serial}}">
                             <button type="button" class="btn btn-primary btn-icon">
                                 <i data-feather="edit"></i>
                             </button>
                         </a>
+                        <div class="modal fade text-left" id="EditModal{{$serial}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Item Details</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <form method="POST" action="{{ url('/order-book/item/update/'.encrypt($item->id)) }}" class="forms-sample" enctype="multipart/form-data">
+                                  @csrf
+                                <div class="row">
+                                  <div class="form-group col-md-4">
+                                    <label for="name">Name<span style="color:red;"> *</span></label>
+                                    <input required type="text" class="form-control" id="name" name="name" placeholder="" value="{{ $item->name }}">
+                                  </div>
+                                  <div class="form-group col-md-4">
+                                    <label for="weight">Weight<span style="color:red;"> *</span></label>
+                                    <input required type="number" step="any" min="0.1" name="weight" id="weight" class="form-control" placeholder="2.3 kg" value="{{ $item->weight }}">
+                                  </div>
+                                  <div class="form-group col-md-4">
+                                    <label for="quantity">Quantity<span style="color:red;"> *</span></label>
+                                    <input required type="number" min="1" value="1" name="quantity" id="quantity" class="form-control" value="{{ $item->quantity }}">
+                                  </div>
+                              </div>
+                              <div class="row">
+                                <div class="form-group col-md-6">
+                                  <label for="email">Vehicle<span style="color:red;"> *</span></label>
+                                  <select required id="vehicle" name="vehicle_id">
+                                      <option selected value="">Select</option>
+                                      @foreach(\App\Models\Vehicle::all() as $vehicle)
+                                          <option @if ($item->vehicle_id == $vehicle->id) selected @endif value="{{ $vehicle->id }}">{{ $vehicle->name }}</option>
+                                      @endforeach
+                                  </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <label for="name">Route<span style="color:red;"> *</span></label>
+                                  <select required onchange="getOrderRate()" id="route" name="route_id">
+                                      <option selected value="">Select</option>
+                                      @foreach(\App\Models\Route::all() as $route)
+                                          <option @if ($item->route_id == $route->id) selected @endif value="{{ $route->id }}">{{ $route->name }}</option>
+                                      @endforeach
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="form-group col-md-12">
+                                  <label for="email">Price<span style="color:red;"> *</span></label>
+                                  <input required readonly type="number" step="any" class="form-control" id="rateItem" name="rate" placeholder="Rs 10,000" value="{{ $item->price }}">
+                                </div>
+                              </div>
+                              <div class="row">
+                                  <div class="form-group col-md-12">
+                                    <label for="email">Delivery Address<span style="color:red;"> *</span></label>
+                                    <textarea required class="form-control" name="delivery_address" id="delivery_address" cols="30" rows="4">{{ $item->delivery_address }}</textarea>
+                                  </div>
+                              </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Yes</a>
+                                </form>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                         <a title="Delete" data-toggle="modal" data-target="#actionModal{{$serial}}">
                             <button type="button" class="btn btn-danger btn-icon">
                                 <i data-feather="trash-2"></i>
@@ -148,11 +215,11 @@
                                 </button>
                               </div>
                               <div class="modal-body">
-                                Are you sure you want to delete this item?
+                                Are you sure you want to delete this order item?
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <a href="{{ url('') }}" type="button" class="btn btn-primary">Yes</a>
+                                <a href="{{ url('/order-book/item/destroy/'.encrypt($item->id)) }}" type="button" class="btn btn-primary">Yes</a>
                               </div>
                             </div>
                           </div>
@@ -162,9 +229,9 @@
                 @endforeach
                 <tr>
                   <td colspan="3" style="border:none;"></td>
-                  <td class="text-center">Total</td>
-                  <td class="text-center">{{ number_format($order->items->sum('price'), 2) }}</td>
-                  <td class="text-center">{{ number_format($order->items->sum('weight'), 2) }}</td>
+                  <td style="font-weight: bold;" class="text-center">Total</td>
+                  <td class="text-center">Rs {{ number_format($order->items->sum('price'), 2) }}</td>
+                  <td class="text-center">{{ number_format($order->items->sum('weight'), 2) }} Kg</td>
                 </tr>
               </tbody>
             </table>
@@ -202,5 +269,16 @@
         }
         });
     }
+
+    function getOrderRate(){
+        var vehicle_id = $('#vehicle').val();
+        var route_id = $('#route').val();
+
+        $.post('{{ route('getRate') }}', {_token:'{{ csrf_token() }}', vehicle_id:vehicle_id, route_id:route_id}, function(data){
+        if(data){        
+            $('#rateItem').val(data);
+        }
+        });
+    } 
   </script>
 @endpush

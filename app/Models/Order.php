@@ -13,6 +13,10 @@ class Order extends Model
         return $this->hasOne(UserSubscription::class, 'user_id', 'user_id');
     }
 
+    public function user(){
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
     public function items(){
         return $this->hasMany(OrderItem::class, 'order_id', 'id');
     }
