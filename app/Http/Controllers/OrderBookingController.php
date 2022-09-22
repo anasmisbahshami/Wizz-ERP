@@ -3,16 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderConfirmationMail;
 use App\Models\UserSubscription;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\OrderItem;
 use \Carbon\Carbon;
+use Dompdf\Dompdf;
 
 class OrderBookingController extends Controller
 {
     public function view()
     {
+        //Order Statuses 
+        //(Unconfirmed, Confirmed, Unpaid, Paid, Started, In progress, Complete)
         return view('dashboard.order-booking.view');
     }
 
@@ -114,10 +120,119 @@ class OrderBookingController extends Controller
     {
         $id = decrypt($id);
         $order = Order::find($id);
-        $order->status = 'Invoice Generated';
-        $order->save();
+        
+        if (count($order->items) <= 0 ) {
+            return redirect()->back()->with('warning', 'Order Must Have At least One Item!');
+        }
 
-        return redirect('/order/view');
+        if ($order->type == 'Subscription') {
+            $order->status = 'Paid';
+            $order->save();
+
+        //Order Invoice Generation (Logo)
+        $avatarUrl = public_path('/assets/images/logo.png');
+        $arrContextOptions=array(
+                        "ssl"=>array(
+                            "verify_peer"=>false,
+                            "verify_peer_name"=>false,
+                        ),
+                    );
+        $type = pathinfo($avatarUrl, PATHINFO_EXTENSION);
+        $avatarData = file_get_contents($avatarUrl, false, stream_context_create($arrContextOptions));
+        $avatarBase64Data = base64_encode($avatarData);
+        $base64 = 'data:image/' . $type . ';base64,' . $avatarBase64Data;
+
+        //Dimension Invoice
+        $avatarUrl1 = public_path('/assets/images/dimension.png');
+        $arrContextOptions1=array(
+                        "ssl"=>array(
+                            "verify_peer"=>false,
+                            "verify_peer_name"=>false,
+                        ),
+                    );
+        $type1 = pathinfo($avatarUrl1, PATHINFO_EXTENSION);
+        $avatarData1 = file_get_contents($avatarUrl1, false, stream_context_create($arrContextOptions1));
+        $avatarBase64Data1 = base64_encode($avatarData1);
+        $base641 = 'data:image/' . $type1 . ';base64,' . $avatarBase64Data1;
+
+        $data = array('email' => $order->user->email,'name' => $order->user->name, 'order' => $order);
+
+        $html = view('pdf.order_invoice', compact('base64', 'base641','order'));
+
+        $dompdf = new Dompdf();
+
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('letter', 'landscape');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        //Sending Mail and Invoice to User Email
+        Mail::send('emails.order_invoice', $data,
+        function($message) use($data, $dompdf){
+        $message->to($data['email'], $data['name'])
+        ->subject('Order Invoice | '.$data['order']->id)
+        ->attachData($dompdf->output(), 'Invoice - '.$data['order']->id.'.pdf')
+        ->from('donotreply@wizz-express.com','Wizz Express & Logistics');
+        });
+
+        return redirect('/order/view')->with('success', 'Order Invoice has been sent to your email!');
+        
+    }else{
+        //Order Invoice Generation (Logo)
+        $avatarUrl = public_path('/assets/images/logo.png');
+        $arrContextOptions=array(
+                        "ssl"=>array(
+                            "verify_peer"=>false,
+                            "verify_peer_name"=>false,
+                        ),
+                    );
+        $type = pathinfo($avatarUrl, PATHINFO_EXTENSION);
+        $avatarData = file_get_contents($avatarUrl, false, stream_context_create($arrContextOptions));
+        $avatarBase64Data = base64_encode($avatarData);
+        $base64 = 'data:image/' . $type . ';base64,' . $avatarBase64Data;
+
+        //Dimension Invoice
+        $avatarUrl1 = public_path('/assets/images/dimension.png');
+        $arrContextOptions1=array(
+                        "ssl"=>array(
+                            "verify_peer"=>false,
+                            "verify_peer_name"=>false,
+                        ),
+                    );
+        $type1 = pathinfo($avatarUrl1, PATHINFO_EXTENSION);
+        $avatarData1 = file_get_contents($avatarUrl1, false, stream_context_create($arrContextOptions1));
+        $avatarBase64Data1 = base64_encode($avatarData1);
+        $base641 = 'data:image/' . $type1 . ';base64,' . $avatarBase64Data1;
+
+        $data = array('email' => $order->user->email,'name' => $order->user->name, 'order' => $order);
+
+        $html = view('pdf.order_invoice', compact('base64', 'base641','order'));
+
+        $dompdf = new Dompdf();
+
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('letter', 'landscape');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        //Sending Mail and Invoice to User Email
+        Mail::send('emails.order_confirmation', $data,
+        function($message) use($data, $dompdf){
+        $message->to($data['email'], $data['name'])
+        ->subject('Order Confirmation | '.$data['order']->id)
+        ->attachData($dompdf->output(), 'Invoice - '.$data['order']->id.'.pdf')
+        ->from('donotreply@wizz-express.com','Wizz Express & Logistics');
+        });
+
+        return redirect('/order/view')->with('success', 'Order Confirmation Email & Invoice has been sent to your email address!');
+    }
+
     }
 
     public function destroy_order($id)
@@ -164,7 +279,19 @@ class OrderBookingController extends Controller
             $order->save();
             return array('success' => true, 'order_id' => encrypt($order->id));
         }else{
-            return array('success' => false, 'msg' => 'No User found with this Email!');
+            //If no email found Create Default User
+            $user = new User();
+            $user->name = 'Default User';
+            $user->email = $request->email;
+            $user->password = Hash::make('default');
+            $user->save();
+            $user->assignRole('User');
+            //Creating new order
+            $order = new Order();
+            $order->type = 'Normal';
+            $order->user_id = $user->id;
+            $order->save();
+            return array('success' => true, 'order_id' => encrypt($order->id));
         }        
     }
 
@@ -182,6 +309,7 @@ class OrderBookingController extends Controller
                     //Creating Order
                     $order = new Order();
                     $order->type = 'Subscription';
+                    $order->status = 'Confirmed';
                     $order->user_id = $subscription->user_id;
                     $order->save();
                     return array('success' => true,

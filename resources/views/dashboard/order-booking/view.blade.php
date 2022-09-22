@@ -155,9 +155,7 @@
        $.post('{{ route('getNormalDetails') }}', {_token:'{{ csrf_token() }}', email:email}, function(data){
         if(data.success == true){
             window.location.replace(APP_URL+'/order-book/add/'+data.order_id);
-        }else{
-            alert(data.msg);
-            }
+        }
         }); 
     }
 
