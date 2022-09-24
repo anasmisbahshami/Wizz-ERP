@@ -173,8 +173,8 @@ class OrderBookingController extends Controller
         Mail::send('emails.order_invoice', $data,
         function($message) use($data, $dompdf){
         $message->to($data['email'], $data['name'])
-        ->subject('Order Invoice | '.$data['order']->id)
-        ->attachData($dompdf->output(), 'Invoice - '.$data['order']->id.'.pdf')
+        ->subject('Order Invoice | W-'.$data['order']->id)
+        ->attachData($dompdf->output(), 'Invoice - W-'.$data['order']->id.'.pdf')
         ->from('donotreply@wizz-express.com','Wizz Express & Logistics');
         });
 
@@ -225,8 +225,8 @@ class OrderBookingController extends Controller
         Mail::send('emails.order_confirmation', $data,
         function($message) use($data, $dompdf){
         $message->to($data['email'], $data['name'])
-        ->subject('Order Confirmation | '.$data['order']->id)
-        ->attachData($dompdf->output(), 'Invoice - '.$data['order']->id.'.pdf')
+        ->subject('Order Confirmation | W-'.$data['order']->id)
+        ->attachData($dompdf->output(), 'Invoice - W-'.$data['order']->id.'.pdf')
         ->from('donotreply@wizz-express.com','Wizz Express & Logistics');
         });
 
