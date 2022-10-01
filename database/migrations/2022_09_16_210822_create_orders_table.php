@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
             $table->string('type')->nullable();
             $table->string('status')->nullable()->default('Unconfirmed');
             $table->string('paid_invoice')->nullable();
+            $table->string('booked_by')->nullable();
             $table->string('notify_paid')->nullable()->default('0');
             $table->string('notify_start')->nullable()->default('0');
             $table->string('notify_in_progress')->nullable()->default('0');

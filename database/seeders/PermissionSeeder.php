@@ -66,6 +66,7 @@ class PermissionSeeder extends Seeder
             ['name' => 'Generate Monthly Range Bill','guard_name' => 'web',],
 
             ['name' => 'Book Order','guard_name' => 'web',],
+            ['name' => 'Track Order','guard_name' => 'web',],
 
             ['name' => 'View Order','guard_name' => 'web',],
             ['name' => 'Delete Order','guard_name' => 'web',],

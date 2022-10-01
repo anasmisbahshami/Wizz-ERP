@@ -40,9 +40,13 @@
             <div class="col-md-6">
               <h6 class="card-title">Order Items</h6>
             </div>
+            @if (!empty($order->paid_invoice))
+            <div class="col-md-6">
+              <a href="{{ url('/order/paid/invoice/'.encrypt($order->id)) }}" type="button" class="btn btn-success" style="float:right;">Paid Invoice</a>
+            </div>
+            @endif
           </div>
-
-          <div class="table-responsive pt-2">
+          <div class="table-responsive pt-3">
             <table class="table table-bordered">
               <thead>
                 <tr>

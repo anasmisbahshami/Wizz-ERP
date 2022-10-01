@@ -12,6 +12,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use \Carbon\Carbon;
 use Dompdf\Dompdf;
+use Auth;
 
 class OrderBookingController extends Controller
 {
@@ -289,12 +290,13 @@ class OrderBookingController extends Controller
             $order = new Order();
             $order->type = 'Normal';
             $order->user_id = $user->id;
+            $order->booked_by = Auth::id();
             $order->save();
             return array('success' => true, 'order_id' => encrypt($order->id));
         }else{
             //If no email found Create Default User
             $user = new User();
-            $user->name = 'Default User';
+            $user->name = strtok($request->email, '@');
             $user->email = $request->email;
             $user->password = Hash::make('default');
             $user->save();
@@ -303,6 +305,7 @@ class OrderBookingController extends Controller
             $order = new Order();
             $order->type = 'Normal';
             $order->user_id = $user->id;
+            $order->booked_by = Auth::id();
             $order->save();
             return array('success' => true, 'order_id' => encrypt($order->id));
         }        
@@ -324,6 +327,7 @@ class OrderBookingController extends Controller
                     $order->type = 'Subscription';
                     $order->status = 'Confirmed';
                     $order->user_id = $subscription->user_id;
+                    $order->booked_by = Auth::id();
                     $order->save();
                     return array('success' => true,
                                 'subscription' => $user_subscription->subscription->name,

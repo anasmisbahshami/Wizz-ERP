@@ -110,13 +110,13 @@
             @endcanany
 
             {{-- Order Management --}}
-            @canany(['Book Order', 'View Order'])
+            @canany(['Book Order', 'View Order', 'Track Order'])
                 <li class="nav-item nav-category">Order Management</li>
                 @canany(['View Order'])
                     <li class="nav-item {{ active_class(['order/*']) }}">
                         <a href="{{ url('order/view') }}" class="nav-link">
                             <i class="link-icon" data-feather="layers"></i>
-                            <span class="link-title">View Orders</span>
+                            <span class="link-title">Orders</span>
                         </a>
                     </li>
                 @endcanany
@@ -126,6 +126,15 @@
                         <a href="{{ url('order-book/view') }}" class="nav-link">
                             <i class="link-icon" data-feather="shopping-bag"></i>
                             <span class="link-title">Order Booking</span>
+                        </a>
+                    </li>
+                @endcanany
+
+                @canany(['Track Order'])
+                    <li class="nav-item {{ active_class(['order-track/*']) }}">
+                        <a href="{{ url('order-track/view') }}" class="nav-link">
+                            <i class="link-icon" data-feather="compass"></i>
+                            <span class="link-title">Order Tracking</span>
                         </a>
                     </li>
                 @endcanany

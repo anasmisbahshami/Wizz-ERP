@@ -34,6 +34,13 @@ class OrderController extends Controller
         return view('dashboard.order.view_details', compact('order'));
     }
 
+    public function download_paid_invoice($id)
+    {
+        $id = decrypt($id);
+        $order = Order::find($id);
+        return Storage::download($order->paid_invoice);
+    }
+    
     public function edit_order_details($id)
     {
         $id = decrypt($id);
