@@ -139,6 +139,7 @@ class OrderBookingController extends Controller
 
         if ($order->type == 'Subscription') {
             $order->status = 'Paid';
+            $order->notify_paid = '1';
             $order->save();
 
         //Order Invoice Generation (Logo)

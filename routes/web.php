@@ -92,7 +92,22 @@ Route::group(['middleware' => 'auth', 'prevent-back-history'], function () {
 
     //Order Routes
     Route::get('/order/view', [App\Http\Controllers\OrderController::class, 'view'])->middleware('can:View Order');
+    Route::get('/order/invoice/{id}', [App\Http\Controllers\OrderController::class, 'download_invoice'])->middleware('can:Download Order Invoice');
+    Route::get('/order/destroy/{id}', [App\Http\Controllers\OrderController::class, 'destroy_order'])->middleware('can:Delete Order');
+    Route::get('/order/view/items/{id}', [App\Http\Controllers\OrderController::class, 'view_order_details'])->middleware('can:View Order Details');
+    Route::get('/order/edit/items/{id}', [App\Http\Controllers\OrderController::class, 'edit_order_details'])->middleware('can:Edit Order Details');
 
+    
+    Route::post('/order/paid/{id}', [App\Http\Controllers\OrderController::class, 'order_paid'])->middleware('can:View Order');
+    
+    Route::get('/order/start/{id}', [App\Http\Controllers\OrderController::class, 'order_start'])->middleware('can:View Order');
+    Route::get('/order/in/progress/{id}', [App\Http\Controllers\OrderController::class, 'order_in_progress'])->middleware('can:View Order');
+    Route::get('/order/complete/{id}', [App\Http\Controllers\OrderController::class, 'order_complete'])->middleware('can:View Order');
+
+    Route::get('/order/acknowledge/{id}', [App\Http\Controllers\OrderController::class, 'acknowledge_order'])->middleware('can:Acknowledge Order');
+    
+    
+    
 
     //Order Booking
     Route::get('/order-book/view', [App\Http\Controllers\OrderBookingController::class, 'view'])->middleware('can:Book Order');

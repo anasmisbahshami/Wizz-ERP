@@ -72,7 +72,8 @@ class PermissionSeeder extends Seeder
             ['name' => 'Download Order Invoice','guard_name' => 'web',],
             ['name' => 'Acknowledge Order','guard_name' => 'web',],
             ['name' => 'View Order Details','guard_name' => 'web',],
-
+            ['name' => 'Edit Order Details','guard_name' => 'web',],
+            
             
         ]);
 
