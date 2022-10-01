@@ -177,7 +177,7 @@
           </tr>
         </thead>
         <tbody>
-          @php $subtotal = 0; @endphp
+          {{-- @php $subtotal = 0; @endphp --}}
           @foreach ($order->items as $item)
           <tr>
             <td class="service">{{$item->name}}</td>
@@ -186,20 +186,20 @@
             <td class="service">{{$item->quantity}}</td>
             <td class="total">Rs {{number_format($item->price, 2)}}</td>
           </tr>
-          @php $subtotal += $item->price; @endphp
+          {{-- @php $subtotal += $item->price; @endphp --}}
           @endforeach
-          @php $gst = (16/100)*$subtotal; @endphp
+          {{-- @php $gst = (16/100)*$subtotal; @endphp --}}
           <tr>
             <td colspan="4">SUBTOTAL</td>
-            <td class="total">Rs {{ number_format($subtotal, 2) }}</td>
+            <td class="total">Rs {{ number_format($order->items->sum('price'), 2) }}</td>
           </tr>
-          <tr>
+          {{-- <tr>
             <td colspan="4">GST 16%</td>
             <td class="total">Rs {{ number_format($gst, 2) }}</td>
-          </tr>
+          </tr> --}}
           <tr>
             <td colspan="4" class="grand total">GRAND TOTAL</td>
-            <td style="float: right;margin-left:30px;" class="grand total" style="font-size:14px;text-align: center;">Rs <span style="@if($order->type == 'Subscription') text-decoration:line-through; @endif">{{ number_format(($gst+$subtotal), 2) }}</span> &nbsp;<span style="text-decoration: none;">({{$order->status}})</span></td>
+            <td style="float: right;margin-left:30px;" class="grand total" style="font-size:14px;text-align: center;">Rs <span style="@if($order->type == 'Subscription') text-decoration:line-through; @endif">{{ number_format($order->items->sum('price'), 2) }}</span> &nbsp;<span style="text-decoration: none;">({{$order->status}})</span></td>
           </tr>
         </tbody>
       </table>

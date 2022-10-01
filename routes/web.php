@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 Auth::routes();
 
+    //Routes Without Middleware
+    Route::get('/order/confirm/{id}', [App\Http\Controllers\OrderBookingController::class, 'confirm_order']);
 
 Route::group(['middleware' => 'auth', 'prevent-back-history'], function () {
     //trigger daily notifications
@@ -102,5 +104,8 @@ Route::group(['middleware' => 'auth', 'prevent-back-history'], function () {
     Route::post('/order-book/item/update/{id}', [App\Http\Controllers\OrderBookingController::class, 'update'])->middleware('can:Book Order');
     Route::post('/order-book/subscription/details', [App\Http\Controllers\OrderBookingController::class, 'subscription_details'])->name('getSubscriptionDetails')->middleware('can:Book Order');
     Route::post('/order-book/normal/details', [App\Http\Controllers\OrderBookingController::class, 'normal_details'])->name('getNormalDetails')->middleware('can:Book Order');
+
+        
+
 
 });

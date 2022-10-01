@@ -116,6 +116,18 @@ class OrderBookingController extends Controller
         return redirect()->back()->with('success', 'Order Item Updated Successfully!');
     }
 
+    public function confirm_order($id)
+    {
+        $id = decrypt($id);
+        $order = Order::find($id);
+        if ($order->status == "Confirmed") {
+            return redirect('/');
+        }
+        $order->status = "Confirmed";
+        $order->save();
+        return view('dashboard.order-booking.confirm', compact('order'));
+    }
+
     public function complete_order($id)
     {
         $id = decrypt($id);
