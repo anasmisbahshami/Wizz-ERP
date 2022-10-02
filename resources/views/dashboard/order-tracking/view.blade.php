@@ -3,13 +3,6 @@
 @push('plugin-styles')
   <link href="{{ asset('assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/datatables-net/dataTables.bootstrap4.css') }}" rel="stylesheet" />
-  <style>
-    .sub-head{
-       text-align:center;
-       background-color:#838383;
-       border: 1px solid #444444      
-    }
-  </style>
 @endpush
 
 @section('content')
@@ -43,22 +36,25 @@
       <div class="card">
         <div class="card-body">
           <h6 class="card-title">Order Tracking</h6>
-          <p style="margin-bottom:12px;">To track your order enter the Tracking#:</p>
-        <!-- Email Subscription Order-->
-            <div id="EmailField" class="form-group">
+          <p style="margin-bottom:12px;">Enter the Tracking ID:</p>
+            <div class="form-group">
+              <form action="{{ url('/order-track/results') }}" method="POST">
+                @csrf
                 <div class="row">
                     <div class="col-md-4">
-                        <input type="email" class="form-control" name="subscription_email" placeholder="Enter Tracking#">
+                        <input required type="number" class="form-control" name="tracking_id" placeholder="29473497112">
                     </div>
                     <div class="col-md-4">
-                        <button style="margin-top:1px;margin-left:-7px;" type="button" onclick="ShowSubscriptionDetail()" class="btn btn-primary">Search</button>
+                        <button style="margin-top:1px;margin-left:-7px;" type="submit" class="btn btn-primary">Search</button>
                     </div>
                 </div>
+              </form>
             </div>
           </div>
         </div>
       </div>
    </div>
+
 @endsection
 
 @push('plugin-scripts')
@@ -76,16 +72,4 @@
   <script src="{{ asset('assets/js/dashboard.js') }}"></script>
   <script src="{{ asset('assets/js/datepicker.js') }}"></script>
   <script src="{{ asset('assets/js/data-table.js') }}"></script>
-
-  <script>
-    function ShowNormalDetail(){
-       var email = $('input[name="normal_email"]').val();
-
-       $.post('{{ route('getNormalDetails') }}', {_token:'{{ csrf_token() }}', email:email}, function(data){
-        if(data.success == true){
-            window.location.replace(APP_URL+'/order-book/add/'+data.order_id);
-        }
-        }); 
-    }
-  </script>
 @endpush

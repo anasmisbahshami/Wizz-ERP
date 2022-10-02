@@ -16,6 +16,7 @@ Auth::routes();
 
     //Routes Without Middleware
     Route::get('/order/confirm/{id}', [App\Http\Controllers\OrderBookingController::class, 'confirm_order']);
+    Route::get('/order/track/{id}', [App\Http\Controllers\OrderTrackingController::class, 'user_tracking']);
 
 Route::group(['middleware' => 'auth', 'prevent-back-history'], function () {
     //trigger daily notifications
@@ -116,5 +117,6 @@ Route::group(['middleware' => 'auth', 'prevent-back-history'], function () {
 
     //Order Tracking Routes
     Route::get('/order-track/view', [App\Http\Controllers\OrderTrackingController::class, 'view'])->middleware('can:Track Order');
-    
+    Route::post('/order-track/results', [App\Http\Controllers\OrderTrackingController::class, 'tracking_results'])->middleware('can:Track Order');
+
 });
