@@ -42,13 +42,14 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <!-- <div class="form-check form-check-flat form-check-primary">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="checkbox" name="remember" id="remember"
-                                                {{ old('remember') ? 'checked' : '' }}>
-                                            Remember me
-                                        </label>
-                                    </div> -->
+                                        
+                                        <!-- <div class="form-check form-check-flat form-check-primary" style="color:white; ">
+                                            <label class="form-check-label" >
+                                                <input class="form-check-input"  type="checkbox" name="remember" id="remember" style="border: 1px solid #262F36 !important;"
+                                                    {{ old('remember') ? 'checked' : '' }}>
+                                                    Remember me
+                                            </label>
+                                        </div>  -->
                                     <div class="mt-3">
                                         <button type="submit" class="btn btn-primary btn-block" style=" background:#E09946;  border: 1px solid #FFBF74; border-radius: 5px; box-shadow:none; color:#172128; height:45px; font-family:'akira'; font-size:18px">Login</button>
                                         
