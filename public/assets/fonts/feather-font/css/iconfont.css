@@ -7,6 +7,15 @@
   url('../fonts/feather.ttf?t=1525787366991') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
   url('../fonts/feather.svg?t=1525787366991#feather') format('svg'); /* iOS 4.1- */
 }
+@font-face {
+  font-family: "akira";
+  src: url('../fonts/Akira\ Expanded.otf'); /* otf*/
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url('../fonts/Montserrat-Medium.ttf'); /* otf*/
+}
 
 .feather {
   /* use !important to prevent issues with browser extensions that change fonts */

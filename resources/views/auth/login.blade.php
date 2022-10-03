@@ -1,27 +1,27 @@
 @extends('layout.master2')
 
 @section('content')
-    <div class="page-content d-flex align-items-center justify-content-center">
-
-        <div class="row w-100 mx-0 auth-page">
-            <div class="col-md-8 col-xl-6 mx-auto">
-                <div class="card">
+<div class="page-content  align-items-center justify-content-center" style="background:#101920">
+    <img src="{{ asset('assets/images/logo.png') }}" width="100px" style="display:block;margin:auto; margin-bottom:35px">
+    <div >
+        <span style="text-align: center;color:white; font-family: 'akira'; font-size:18px;"><h1 style="font-size:18px">LOGIN TO</h1></span>
+        <span  style="text-align: center;color:#E09946; font-family: 'akira'; font-size:22px; "><h1 style="font-size:22px">WIZZ LOGISTICS</h1></span>
+    
+        <div class="row w-100 mx-0 auth-page" style="margin-top:35px">
+            
+            <div class="col-lg-4 col-md-9 col-xl-3 mx-auto" >
+                <div class="card" style="background: #172128; border: 1px solid #262F36; border-radius: 10px;box-shadow:none;">
+                    
                     <div class="row">
-                        <div class="col-md-4 pr-md-0">
-                            <div class="auth-left-wrapper" style="background-image: url('{{ asset('assets/images/Mockupp.png') }}');" >
-                            </div>
-                         </div>
-                        <div class="col-md-8 pl-md-0">
-                            <div class="auth-form-wrapper px-4 py-5">
-                                <a href="#" class="text-center noble-ui-logo d-block mb-2">
-                                    <img src="{{ asset('assets/images/LOGO_RGB_B.svg') }}" style="width:300px;">
-                                </a><br>
-                                <h5 class="text-muted font-weight-normal mb-4">Welcome back! Log in to your account.</h5>
+                        <div class="col-md-12 col-xl-12 pl-md-0">
+                            <div class="auth-form-wrapper px-5 py-5">
+                                <a href="#" class="text-center noble-ui-logo d-block ">
+                                </a>
                                 <form method="POST" action="{{ route('login') }}">
                                     @csrf
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Email Address</label>
-                                        <input id="email" type="email"
+                                        <label style="font-family:Montserrat;color: white;font: size 16px; margin-bottom: 10px;">Enter your Your Email</label>
+                                        <input id="email" type="email" placeholder="Enter your Email" style="margin-bottom: 35px; background:#101920;  border: 1px solid #262F36; border-radius: 5px;box-shadow:none; color:white; height:45px" 
                                             class="form-control @error('email') is-invalid @enderror" name="email"
                                             value="{{ old('email') }}" required autocomplete="email" autofocus>
                                         @error('email')
@@ -31,8 +31,9 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputPassword1">Password</label>
-                                        <input id="password" type="password"
+                                        <label style="font-family:Montserrat;color: white;font: size 16px; margin-bottom: 10px;">Enter your Password</label>
+                                        <label style="font-family:Montserrat;color: white;font: size 16px; margin-bottom: 10px; float:right;"><a href="" style="color:#E09946">Forget Password?</a></label>
+                                        <input id="password" type="password" placeholder="Password" style="margin-bottom: 35px; background:#101920;  border: 1px solid #262F36; border-radius: 5px;box-shadow:none; color:white; height:45px"
                                             class="form-control @error('password') is-invalid @enderror" name="password"
                                             required autocomplete="current-password">
                                         @error('password')
@@ -49,15 +50,18 @@
                                         </label>
                                     </div> -->
                                     <div class="mt-3">
-                                        <button type="submit" class="btn btn-primary mr-2 mb-2 mb-md-0">Login</button>
+                                        <button type="submit" class="btn btn-primary btn-block" style=" background:#E09946;  border: 1px solid #FFBF74; border-radius: 5px; box-shadow:none; color:#172128; height:45px; font-family:'akira'; font-size:18px">Login</button>
+                                        
                                     </div>
                                 </form>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>
         </div>
 
     </div>
+</div>
 @endsection
