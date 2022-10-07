@@ -1,9 +1,5 @@
 @extends('layout.master2')
-<style>
-    #ForgotPassword{
-        font-size: 13px !important;
-    }
-</style>
+
 @section('content')
 <div class="page-content  align-items-center justify-content-center" style="background:#101920">
     <img src="{{ asset('assets/images/logo.png') }}" width="100px" style="display:block;margin:auto; margin-bottom:35px">
@@ -18,19 +14,17 @@
                             <div class="auth-form-wrapper px-5 py-5">
                                 <a href="#" class="text-center noble-ui-logo d-block ">
                                 </a>
-                                <form method="POST" action="{{ route('login') }}">
+                                <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                                     @csrf
-
                                     <div class="form-group">
                                         <label style="font-family:Montserrat;color: white;font: size 16px; margin-bottom: 10px;">Name</label>
-                                        <input id="name" name="name" type="name" required placeholder="Enter your name" style="color:white;background:#101920;border: 1px solid #262F36;border-radius: 5px;height:45px;" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}">
+                                        <input id="name" name="name" type="text" required placeholder="Enter your name" style="color:white;background:#101920;border: 1px solid #262F36;border-radius: 5px;height:45px;" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}">
                                         @error('name')
                                             <span class="invalid-feedback" style="font-size:13px;" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
-
                                     <div class="form-group">
                                         <label style="font-family:Montserrat;color: white;font: size 16px; margin-bottom: 10px;">Email</label>
                                         <input id="email" name="email" type="email" required placeholder="Enter your email" style="color:white;background:#101920;border: 1px solid #262F36;border-radius: 5px;height:45px;" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}">
@@ -49,30 +43,26 @@
                                             </span>
                                         @enderror
                                     </div>
-                                        
-
                                     <label style="font-family:Montserrat;color: white;font: size 16px; margin-bottom: 10px;">Account Type</label>
                                     <div class="form-group">
                                         <div class="form-check form-check-inline">
                                           <label class="form-check-label" style="color:white;">
-                                            <input type="radio" class="form-check-input" name="optionsRadios5" id="optionsRadios6" value="option5">
+                                            <input required type="radio" class="form-check-input" name="account_type" id="account_type" value="user">
                                             User
                                           </label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <label class="form-check-label" style="color:white;">
-                                              <input type="radio" class="form-check-input" name="optionsRadios5" id="optionsRadios6" value="option5">
+                                              <input required type="radio" class="form-check-input" name="account_type" id="account_type" value="vendor">
                                               Vendor
                                             </label>
                                         </div>
                                     </div>
-
-
                                     <div class="mt-3">
                                         <button type="submit" class="btn btn-primary btn-block" style=" background:#E09946;  border: 1px solid #FFBF74; border-radius: 5px; box-shadow:none; color:#172128; height:45px; font-family:'akira'; font-size:18px">Register</button>
                                     </div>
                                     <div style="padding-bottom: 0px;">
-                                        <label style="font-family:Montserrat;color: white;font: size 16px; margin-top: 34px; text-align: center;width:100%; marin-bottom:0px;">Already have an account?<a href="{{url('/register')}}" style="color:#E09946"> Login</a></label>
+                                        <label style="font-family:Montserrat;color: white;font: size 16px; margin-top: 34px; text-align: center;width:100%; marin-bottom:0px;">Already have an account?<a href="{{url('/login')}}" style="color:#E09946"> Login</a></label>
                                     </div>
                                 </form>
                             </div>
