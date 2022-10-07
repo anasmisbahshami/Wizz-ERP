@@ -45,7 +45,7 @@ class RoleController extends Controller
         $role = Role::create(['name' => $request->role_name,
                                 'description' => $request->role_description,
                             ]);
-        $role->syncPermissions($request->permissions);
+        $role->syncPermissions($request->role_permissions);
         return redirect('role/view')->with('success','New role has been added.');
     }
 
@@ -88,7 +88,7 @@ class RoleController extends Controller
         $role->name = $request->role_name;
         $role->description = $request->role_description;
         $role->save();
-        $role->syncPermissions($request->permissions);
+        $role->syncPermissions($request->role_permissions);
         return redirect('role/view')->with('success','Role has been updated.');
     }
 

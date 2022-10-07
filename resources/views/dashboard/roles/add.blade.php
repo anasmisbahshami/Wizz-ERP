@@ -42,56 +42,20 @@
           <div class="form-group">
             <label for="role_name">Role Name<span style="color:red;"> *</span></label>
             <input required type="text" class="form-control" id="role_name" name="role_name" autocomplete="off" placeholder="e.g. Admin">
-            <label class="error mt-2 text-danger" for="role_name">This names role already exists, please choose another one.</label>
+            <label style="font-weight:bold;" class="error mt-2 text-danger" for="role_name">This named role already exists, please choose another one.</label>
           </div>
           <div class="form-group">
             <label for="role_description">Decription</label>
             <input type="text" class="form-control" id="role_description" name="role_description" placeholder="">
           </div>
           <div class="form-group">
-            <label for="role_permissions">Select Type <span style="color:red;"> *</span></label>
-            <select onchange="myFunction()" required class="js-example-basic-single w-100" id="role_permissions" name="role_permissions[]" multiple="multiple">
+            <label for="role_permissions">Select Permissions for this Role <span style="color:red;"> *</span><small>(Press CTRL and then click to select multiple at once)</small></label>
+            <select required class="js-example-basic-single w-100" id="role_permissions" name="role_permissions[]" multiple="multiple">
               <option disabled>select</option>
-              <option value="0">User</option>
-              <option value="1">Role</option>
+              @foreach(\Spatie\Permission\Models\Permission::all() as $permission)
+              <option>{{ $permission->name }}</option>
+              @endforeach
             </select>
-          </div>
-          <div class="form-group" id="role_permissions_select" style="display: none;">
-            <label for="role_permissions">Select Role Permissions <span style="color:red;"> *</span></label>
-            <div class="row">
-              <div class="col-sm-2">
-                <div class="form-check">
-                  <label class="form-check-label">
-                    <input type="checkbox" class="form-check-input" name="permissions[]" value="Add Role">
-                    Add Role
-                  </label>
-                </div>
-              </div>
-              <div class="col-sm-2">
-                <div class="form-check">
-                  <label class="form-check-label">
-                    <input type="checkbox" class="form-check-input" name="permissions[]" value="View Role">
-                    View Role
-                  </label>
-                </div>
-              </div>
-              <div class="col-sm-2">
-                <div class="form-check">
-                  <label class="form-check-label">
-                    <input type="checkbox" class="form-check-input" name="permissions[]" value="Edit Role">
-                    Edit Role
-                  </label>
-                </div>
-              </div>
-              <div class="col-sm-2">
-                <div class="form-check">
-                  <label class="form-check-label">
-                    <input type="checkbox" class="form-check-input" name="permissions[]" value="Delete Role">
-                    Delete Role
-                  </label>
-                </div>
-              </div>
-            </div>
           </div>
           <button type="submit" class="btn btn-primary mr-2">Submit</button>
           <a class="btn btn-light" href="{{ url('role/view') }}">Cancel</a>
@@ -117,38 +81,8 @@
 <script src="{{ asset('assets/js/datepicker.js') }}"></script>
 <script src="{{ asset('assets/js/select2.js') }}"></script>
 <script>
-  function myFunction() {
-    $('#role_permissions_select').hide();
-    $('#user_select').hide();
-    var selectedVals = []
-    $("#role_permissions :selected").each(function() {
-      selectedVals.push(this.value);
-    });
-    if (selectedVals.includes("0") && selectedVals.includes("1")) {
-      $('#user_select').show();
-      $('#role_permissions_select').show();
-    }
-    else {
-      if (selectedVals.includes("0")) {
-        $('#user_select').show();
-        $('#role_permissions_select').hide();
-        $('#role_permissions_select').find('input[type=checkbox]').prop('checked', false);
-      }
-      if (selectedVals.includes("1")) {
-        $('#user_select').hide();
-        $('#user_select').find('input[type=checkbox]').prop('checked', false);
-        $('#role_permissions_select').show();
-      }
-      if (!selectedVals.includes("0") && !selectedVals.includes("1")) {
-        $('#user_select').find('input[type=checkbox]').prop('checked', false);
-        $('#role_permissions_select').find('input[type=checkbox]').prop('checked', false);
-      }
-    }
-  }
-
   $(document).ready(function() {
     $('.text-danger').hide();
-    myFunction();
   });
   $('#role_name').on('blur', function() {
     var rolename = $('#role_name').val();
