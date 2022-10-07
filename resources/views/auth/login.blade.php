@@ -31,9 +31,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label style="font-family:Montserrat;color: white;font: size 16px; margin-bottom: 10px;">Password</label>
-
                                         <label id="ForgotPassword" style="font-family:Montserrat;color: white;font: size 16px; margin-bottom: 10px; float:right;"><a href="{{url('/forgot-password')}}" style="color:#E09946">Forget Password?</a></label>
-                                        
                                         <input id="password" type="password" name="password" required placeholder="Enter your password" style="margin-bottom: 20px; background:#101920;border: 1px solid #262F36; border-radius: 5px; height:45px" class="form-control @error('password') is-invalid @enderror">
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">
@@ -48,24 +46,19 @@
                                                     Remember me
                                             </label>
                                         </div>
-
                                     <div class="mt-3">
                                         <button type="submit" class="btn btn-primary btn-block" style=" background:#E09946;  border: 1px solid #FFBF74; border-radius: 5px; box-shadow:none; color:#172128; height:45px; font-family:'akira'; font-size:18px">Login</button>
                                     </div>
-
                                     <div style="padding-bottom: 0px;">
-                                        <label style="font-family:Montserrat;color: white;font: size 16px; margin-top: 34px; text-align: center;width:100%; marin-bottom:0px;">Don't have an account?<a href="#" style="color:#E09946"> Register New</a></label>
+                                        <label style="font-family:Montserrat;color: white;font: size 16px; margin-top: 34px; text-align: center;width:100%; marin-bottom:0px;">Don't have an account?<a href="{{url('/register')}}" style="color:#E09946"> Register New</a></label>
                                     </div>
-                                    
                                 </form>
                             </div>
                         </div>
-                        
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 @endsection
