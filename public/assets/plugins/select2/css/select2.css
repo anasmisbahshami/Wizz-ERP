@@ -128,7 +128,7 @@
   white-space: nowrap !important; }
 
 .select2-container--default .select2-selection--single {
-  background-color: #fff;
+  background-color: #101920;
   border: 1px solid #aaa;
   border-radius: 4px; }
   .select2-container--default .select2-selection--single .select2-selection__rendered {
@@ -176,7 +176,7 @@
   border-width: 0 4px 5px 4px; }
 
 .select2-container--default .select2-selection--multiple {
-  background-color: white;
+  background-color: #101920;
   border: 1px solid #aaa;
   border-radius: 4px;
   cursor: text; }

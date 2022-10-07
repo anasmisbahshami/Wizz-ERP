@@ -1,7 +1,7 @@
 <nav class="sidebar">
     <div class="sidebar-header">
         <a href="#" class="sidebar-brand">
-            <img src="{{ asset('assets/images/LOGO_RGB_W.svg') }}" style="width:100px;">
+            <p style="font-family:akira; color:#E09946;line-height:1.0;">WIZZ</p>
         </a>
         <div class="sidebar-toggler not-active">
             <span></span>

@@ -77,7 +77,7 @@
               </thead>
               <tbody>
                 @foreach($subscriptions as $serial => $subscription)
-                <tr @if ($subscription->notify_subscribed == '1') style="background-color:#F2F3F4" @endif>
+                <tr @if ($subscription->notify_subscribed == '1') style="background-color:#101920" @endif>
                   <td>{{ $serial + 1 }}</td>
                   <td>{{ $subscription->user->name }}</td>
                   <td>{{ $subscription->subscription->name }}</td>

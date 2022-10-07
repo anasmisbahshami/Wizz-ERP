@@ -67,7 +67,7 @@
               </thead>
               <tbody>
                 @foreach($orders as $serial => $order)
-                <tr @if ($order->notify_paid == '1' || $order->notify_complete == '1') style="background-color:#F2F3F4;" @endif>
+                <tr @if ($order->notify_paid == '1' || $order->notify_complete == '1') style="background-color:#262F36;" @endif>
                   <td>{{ $serial + 1 }}</td>
                   <td>{{ $order->user->name }}</td>
                   <td>{{ $order->type }}</td>
