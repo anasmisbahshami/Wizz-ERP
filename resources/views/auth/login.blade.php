@@ -54,7 +54,7 @@
                                     </div>
 
                                     <div style="padding-bottom: 0px;">
-                                        <label style="font-family:Montserrat;color: white;font: size 16px; margin-top: 34px; text-align: center;width:100%">Don't have an account?<a href="#" style="color:#E09946"> Register New</a></label>
+                                        <label style="font-family:Montserrat;color: white;font: size 16px; margin-top: 34px; text-align: center;width:100%; marin-bottom:0px;">Don't have an account?<a href="#" style="color:#E09946"> Register New</a></label>
                                     </div>
                                     
                                 </form>
