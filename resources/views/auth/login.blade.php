@@ -32,9 +32,9 @@
                                     <div class="form-group">
                                         <label style="font-family:Montserrat;color: white;font: size 16px; margin-bottom: 10px;">Password</label>
                                         <label id="ForgotPassword" style="font-family:Montserrat;color: white;font: size 16px; margin-bottom: 10px; float:right;"><a href="{{url('/forgot-password')}}" style="color:#E09946">Forget Password?</a></label>
-                                        <input id="password" type="password" name="password" required placeholder="Enter your password" style="margin-bottom: 20px; background:#101920;border: 1px solid #262F36; border-radius: 5px; height:45px" class="form-control @error('password') is-invalid @enderror">
+                                        <input id="password" type="password" name="password" required placeholder="Enter your password" style="color:white;margin-bottom: 20px; background:#101920;border: 1px solid #262F36; border-radius: 5px; height:45px" class="form-control @error('password') is-invalid @enderror">
                                         @error('password')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback" style="font-size:13px;" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
