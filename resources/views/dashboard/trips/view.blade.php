@@ -80,7 +80,7 @@
               </thead>
               <tbody>
                 @foreach($trips as $serial => $trip)
-                <tr @if ($trip->notify_complete == '1' || $trip->notify_start == '1') style="background-color:#262F36;" @endif>
+                <tr @if ($trip->notify_complete == '1' || $trip->notify_start == '1') style="background-color:#101920;" @endif>
                   <td>{{ $serial + 1 }}</td>
                   <td>{{ $trip->vehicle->name }}</td>
                   <td>{{ $trip->route->name }}</td>
