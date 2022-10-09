@@ -5117,9 +5117,9 @@ fieldset:disabled .wizard>.actions a,
 }
 
 .btn-secondary {
-    color: #fff;
-    background-color: #7987a1;
-    border-color: #7987a1;
+    color: #101920;
+    background-color: #E09946;
+    border-color: #FFBF74;
 }
 
 .btn-secondary:hover {
@@ -5334,9 +5334,9 @@ fieldset:disabled .wizard>.actions a,
 }
 
 .btn-light {
-    color: #212529;
-    background-color: #ececec;
-    border-color: #ececec;
+    color: #fff;
+    background-color: #101920;
+    border-color: #1C2E3A;
 }
 
 .btn-light:hover {
@@ -9699,13 +9699,13 @@ a.badge-danger-muted.focus {
     font-size: 1.5rem;
     font-weight: 700;
     line-height: 1;
-    color: #000;
+    color: #fff;
     text-shadow: 0 1px 0 #fff;
     opacity: .5;
 }
 
 .close:hover {
-    color: #000;
+    color: #CFCFCF;
     text-decoration: none;
 }
 
@@ -9870,7 +9870,7 @@ a.close.disabled {
     flex-direction: column;
     width: 100%;
     pointer-events: auto;
-    background-color: #ffffff;
+    background-color: #101920;
     background-clip: padding-box;
     border: 1px solid #1C2E3A;
     border-radius: 0.3rem;
@@ -9900,7 +9900,7 @@ a.close.disabled {
     align-items: flex-start;
     justify-content: space-between;
     padding: 1rem 1rem;
-    border-bottom: 1px solid #e8ebf1;
+    border-bottom: 1px solid #1B2C38;
     border-top-left-radius: calc(0.3rem - 1px);
     border-top-right-radius: calc(0.3rem - 1px);
 }
@@ -22326,7 +22326,7 @@ code {
 }
 
 .border-bottom {
-    border-bottom: 1px solid #e8ebf1;
+    border-bottom: 1px solid #1B2C38;
 }
 
 .border-left {
@@ -22356,7 +22356,7 @@ code {
 
 .border-y {
     border-top: 1px solid #354359;
-    border-bottom: 1px solid #e8ebf1;
+    border-bottom: 1px solid #1B2C38;
 }
 
 @media (min-width: 576px) {
@@ -22369,7 +22369,7 @@ code {
     }
 
     .border-sm-bottom {
-        border-bottom: 1px solid #e8ebf1;
+        border-bottom: 1px solid #1B2C38;
     }
 
     .border-sm-left {
@@ -22399,7 +22399,7 @@ code {
 
     .border-sm-y {
         border-top: 1px solid #354359;
-        border-bottom: 1px solid #e8ebf1;
+        border-bottom: 1px solid #1B2C38;
     }
 }
 
@@ -22413,7 +22413,7 @@ code {
     }
 
     .border-md-bottom {
-        border-bottom: 1px solid #e8ebf1;
+        border-bottom: 1px solid #1B2C38;
     }
 
     .border-md-left {
@@ -22443,7 +22443,7 @@ code {
 
     .border-md-y {
         border-top: 1px solid #354359;
-        border-bottom: 1px solid #e8ebf1;
+        border-bottom: 1px solid #1B2C38;
     }
 }
 
@@ -22457,7 +22457,7 @@ code {
     }
 
     .border-lg-bottom {
-        border-bottom: 1px solid #e8ebf1;
+        border-bottom: 1px solid #1B2C38;
     }
 
     .border-lg-left {
@@ -22487,7 +22487,7 @@ code {
 
     .border-lg-y {
         border-top: 1px solid #354359;
-        border-bottom: 1px solid #e8ebf1;
+        border-bottom: 1px solid #1B2C38;
     }
 }
 
@@ -22501,7 +22501,7 @@ code {
     }
 
     .border-xl-bottom {
-        border-bottom: 1px solid #e8ebf1;
+        border-bottom: 1px solid #1B2C38;
     }
 
     .border-xl-left {
@@ -22531,7 +22531,7 @@ code {
 
     .border-xl-y {
         border-top: 1px solid #354359;
-        border-bottom: 1px solid #e8ebf1;
+        border-bottom: 1px solid #1B2C38;
     }
 }
 
@@ -22720,7 +22720,7 @@ code {
 }
 
 .bd-b {
-    border-bottom: 1px solid #e8ebf1;
+    border-bottom: 1px solid #1B2C38;
 }
 
 .bd-l {
@@ -22729,7 +22729,7 @@ code {
 
 .bd-y {
     border-top: 1px solid #354359;
-    border-bottom: 1px solid #e8ebf1;
+    border-bottom: 1px solid #1B2C38;
 }
 
 .bd-x {
@@ -24091,7 +24091,7 @@ address p {
 }
 
 .sidebar-open .sidebar .sidebar-header {
-    border-bottom: 1px solid #e8ebf1;
+    border-bottom: 1px solid #1B2C38;
 }
 
 .sidebar .sidebar-header .sidebar-brand {
@@ -29473,7 +29473,7 @@ select.border-danger-muted:focus,
 }
 
 .icons-list>div {
-    border-bottom: 1px solid #e8ebf1;
+    border-bottom: 1px solid #1B2C38;
     border-right: 1px solid #e8ebf1;
     background: #101920;
     display: flex;
@@ -30566,7 +30566,7 @@ select.border-danger-muted:focus,
 
 .inbox-wrapper .email-content .email-filters {
     padding: 20px;
-    border-bottom: 1px solid #e8ebf1;
+    border-bottom: 1px solid #1B2C38;
     background-color: transparent;
     width: 100%;
     border-top: 1px solid #354359;
@@ -30627,7 +30627,7 @@ select.border-danger-muted:focus,
 .inbox-wrapper .email-content .email-list .email-list-item {
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #e8ebf1;
+    border-bottom: 1px solid #1B2C38;
     padding: 10px 20px;
     width: 100%;
     cursor: pointer;
@@ -30778,7 +30778,7 @@ select.border-danger-muted:focus,
 
 .email-head-subject {
     padding: 25px 25px;
-    border-bottom: 1px solid #e8ebf1;
+    border-bottom: 1px solid #1B2C38;
 }
 
 @media (max-width: 767px) {
@@ -30958,7 +30958,7 @@ select.border-danger-muted:focus,
 
 .email-head-title {
     padding: 15px;
-    border-bottom: 1px solid #e8ebf1;
+    border-bottom: 1px solid #1B2C38;
     font-weight: 400;
     color: #3d405c;
     font-size: .99rem;
