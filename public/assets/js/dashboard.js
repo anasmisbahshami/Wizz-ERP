@@ -168,18 +168,23 @@ $(function() {
     [149,36.97330575970296]
   ];
 
-  // Dashbaord date start
+  // Dashboard Start Date
   if($('#dashboardDate').length) {
-    var date = new Date();
-    var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
     $('#dashboardDate').datepicker({
       format: "dd-MM-yyyy",
       todayHighlight: true,
       autoclose: true
     });
-    $('#dashboardDate').datepicker('setDate', today);
   }
-  // Dashbaord date end
+
+  // Dashboard End Date
+    if($('#dashboardDate1').length) {
+      $('#dashboardDate1').datepicker({
+        format: "dd-MM-yyyy",
+        todayHighlight: true,
+        autoclose: true
+      });
+    }
 
   // Flot chart1 start
   if($('#flotChart1').length) {
@@ -250,7 +255,7 @@ $(function() {
       markers: {
         size: 0
       },
-      colors: ["#727cf5"],
+      colors: ["#E09946"],
       tooltip: {
         fixed: {
           enabled: !1
@@ -289,7 +294,7 @@ $(function() {
           columnWidth: "60%"
         }
       },
-      colors: ["#727cf5"],
+      colors: ["#E09946"],
       series: [{
         data: [36, 77, 52, 90, 74, 35, 55, 23, 47, 10, 63]
       }],
@@ -342,7 +347,7 @@ $(function() {
       markers: {
         size: 0
       },
-      colors: ["#727cf5"],
+      colors: ["#E09946"],
       tooltip: {
         fixed: {
           enabled: !1

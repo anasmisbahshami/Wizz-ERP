@@ -148,7 +148,7 @@
           <div class="dropdown-body">
             <ul class="profile-nav p-0 pt-3">
               <li class="nav-item pb-1">
-                <a href="{{ url('/general/profile') }}" class="nav-link">
+                <a href="{{ url('/profile/view') }}" class="nav-link">
                   <i data-feather="user"></i>
                   <span>Profile</span>
                 </a>

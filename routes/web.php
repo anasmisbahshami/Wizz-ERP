@@ -19,10 +19,14 @@ Auth::routes();
     Route::get('/order/track/{id}', [App\Http\Controllers\OrderTrackingController::class, 'user_tracking']);
 
 Route::group(['middleware' => 'auth', 'prevent-back-history'], function () {
-    //trigger daily notifications
+    //Trigger Daily Notifications
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     
+    //Home Route
     Route::get('/', [App\Http\Controllers\DashboardController::class, 'index']);
+
+    //User Profile Routes
+    Route::get('/profile/view', [App\Http\Controllers\UserProfileController::class, 'view']);
 
     //Role Routes
     Route::get('/role/view', [App\Http\Controllers\RoleController::class, 'view'])->middleware('can:View Role');

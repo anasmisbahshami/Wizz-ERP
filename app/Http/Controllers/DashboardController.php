@@ -10,7 +10,10 @@ use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
-    function index(){
-        return view('dashboard.dashboard');
+    public function index()
+    {
+        $start_date = Carbon::now()->subMonth(1)->format('d-F-Y');
+        $end_date = Carbon::now()->format('d-F-Y');
+        return view('dashboard.dashboard', compact('start_date', 'end_date'));
     }
 }

@@ -9,6 +9,7 @@ use App\Mail\OrderConfirmationMail;
 use App\Models\UserSubscription;
 use App\Models\User;
 use App\Models\Order;
+use App\Models\Trip;
 use App\Models\OrderItem;
 use \Carbon\Carbon;
 use Dompdf\Dompdf;
@@ -58,6 +59,16 @@ class OrderBookingController extends Controller
         $item->price = $request->rate;
         $item->delivery_address = $request->delivery_address;
         $item->save();
+
+        //Adding Trip
+        $trip = new Trip();
+        $trip->vehicle_id = $request->vehicle_id;
+        $trip->route_id = $request->route_id;
+        $trip->date = $item->created_at;
+        $trip->rate = $request->rate;
+        $trip->status = 'In Progress';
+        $trip->notify_start = 1;
+        $trip->save();
 
         return redirect()->back()->with('success', 'Order Item Added Successfully!');
     }
@@ -113,6 +124,16 @@ class OrderBookingController extends Controller
         $orderItem->price = $request->rate;
         $orderItem->delivery_address = $request->delivery_address;
         $orderItem->save();
+
+        //Updating Trip
+        $trip = Trip::where('vehicle_id', $orderItem->vehicle_id)->where('route_id', $orderItem->route_id)
+                    ->where('rate', $orderItem->price)->first();
+
+        Trip::find($trip->id)->update([
+            'vehicle_id' => $request->vehicle_id,
+            'route_id' => $request->route_id,
+            'rate' => $request->rate,
+        ]);
 
         return redirect()->back()->with('success', 'Order Item Updated Successfully!');
     }

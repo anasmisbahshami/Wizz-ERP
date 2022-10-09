@@ -48,12 +48,12 @@ $(function() {
     new Chart($('#chartjsDoughnut'), {
       type: 'doughnut',
       data: {
-        labels: ["Africa", "Asia", "Europe"],
+        labels: ["Junaid", "Hamza"],
         datasets: [
           {
             label: "Population (millions)",
-            backgroundColor: ["#7ee5e5","#f77eb9","#4d8af0"],
-            data: [2478,4267,1334]
+            backgroundColor: ["#FFFFFF","#E09946"],
+            data: [2478,4267]
           }
         ]
       }
@@ -213,12 +213,12 @@ $(function() {
         labels: ["1900", "1950", "1999", "2050"],
         datasets: [
           {
-            label: "Africa",
-            backgroundColor: "#f77eb9",
+            label: "Confirmed",
+            backgroundColor: "#E09946",
             data: [133,221,783,2478]
           }, {
-            label: "Europe",
-            backgroundColor: "#7ee5e5",
+            label: "Paid",
+            backgroundColor: "#FFFFFF",
             data: [408,547,675,734]
           }
         ]
