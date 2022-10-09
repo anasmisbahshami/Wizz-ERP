@@ -6,8 +6,8 @@
   <style>
     .sub-head{
        text-align:center;
-       background-color:#838383;
-       border: 1px solid #444444      
+       background-color:#E09946;
+       border: 1px solid #E09946      
     }
   </style>
 @endpush
@@ -172,12 +172,12 @@
         if (data.remaining_weight > 0 && data.valid_upto_result) {
             $('#PlaceOrderButton').show();
             $('#PlaceOrderButton').html(
-                '<a href="/order-book/add/'+data.order_id+'" style="background-color: #838383;color:white;" class="btn mt-4" class="btn btn-icon-text"><i class="btn-icon-prepend" data-feather="check-square"></i>Place Order</a>'
+                '<a href="/order-book/add/'+data.order_id+'" style="background-color: #E09946;color:white;" class="btn mt-4" class="btn btn-icon-text"><i class="btn-icon-prepend" data-feather="check-square"></i>Place Order</a>'
             );  
         }else{
             $('#PlaceOrderButton').show();
             $('#PlaceOrderButton').html(
-                '<button disabled style="background-color: #838383;color:white;pointer-events: none;" class="btn mt-4" class="btn btn-icon-text"><i class="btn-icon-prepend" data-feather="check-square"></i>Place Order</button>'
+                '<button disabled style="background-color: #E09946;color:white;pointer-events: none;" class="btn mt-4" class="btn btn-icon-text"><i class="btn-icon-prepend" data-feather="check-square"></i>Place Order</button>'
             );
             alert('Your Subscription is not compatible for placing order!')
         }
