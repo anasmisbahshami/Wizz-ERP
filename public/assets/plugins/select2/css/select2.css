@@ -48,7 +48,7 @@
         -webkit-appearance: none; }
 
 .select2-dropdown {
-  background-color: white;
+  background-color: #1C2E3A;
   border: 1px solid #aaa;
   border-radius: 4px;
   box-sizing: border-box;
@@ -264,7 +264,7 @@
   color: #999; }
 
 .select2-container--default .select2-results__option[aria-selected=true] {
-  background-color: #ddd; }
+  background-color: #172128; }
 
 .select2-container--default .select2-results__option .select2-results__option {
   padding-left: 1em; }
@@ -318,7 +318,7 @@
   .select2-container--classic .select2-selection--single .select2-selection__placeholder {
     color: #999; }
   .select2-container--classic .select2-selection--single .select2-selection__arrow {
-    background-color: #ddd;
+    background-color: #172128;
     border: none;
     border-left: 1px solid #aaa;
     border-top-right-radius: 4px;

@@ -543,7 +543,7 @@
   transition: transform 0.5s ease-in-out;
 }
 .tinymce-mobile-styles-menu .tinymce-mobile-styles-item {
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #172128;
   color: #455a64;
   cursor: pointer;
   display: flex;

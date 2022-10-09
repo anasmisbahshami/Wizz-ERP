@@ -508,7 +508,7 @@ hr {
   border: 0;
   border-top: 1px solid #CCC; }
   hr.big {
-    border-top: 2px solid #DDD;
+    border-top: 2px solid #172128;
     margin-top: 54px;
     margin-bottom: 54px; }
 
@@ -1035,7 +1035,7 @@ header#header {
     color: rgba(255, 210, 112, 0.5); }
 
 footer#footer {
-  background: #DDD;
+  background: #172128;
   color: #888;
   padding: 30px 0;
   margin-top: 30px; }
@@ -1053,7 +1053,7 @@ p.help {
 #toggleDropify {
   font-size: 12px;
   text-transform: uppercase;
-  background: #DDD;
+  background: #172128;
   color: #888;
   font-weight: bold;
   border: 0;

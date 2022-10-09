@@ -59,7 +59,7 @@
                   @endforeach
                 </select>
                 @can('Add City')
-                <a class="btn btn-link" style="float:right;color:#007bff;text-decoration:underline;" data-toggle="modal" data-target="#CityModal">Can't find your city?</a>
+                <a class="btn btn-link" style="float:right;color:#E09946;text-decoration:underline;" data-toggle="modal" data-target="#CityModal">Can't find your city?</a>
                 @endcan
               </div>
             </div>
