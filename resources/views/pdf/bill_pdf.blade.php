@@ -10,7 +10,7 @@
     <!-- CSRF Token -->
     <meta name="_token" content="{{ csrf_token() }}">
 
-    <link rel="shortcut icon" href="{{ asset('/assets/img/favicon.png') }}">
+    <link rel="shortcut icon" href="{{ asset('/assets/img/logo.png') }}">
     <!-- end plugin css -->
 
     <!-- common css -->

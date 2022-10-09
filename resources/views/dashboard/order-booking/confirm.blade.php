@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="shortcut icon" href="{{ asset('/assets/images/favicon.png') }}">
+    <link rel="shortcut icon" href="{{ asset('/assets/images/logo.png') }}">
     <title>Order Confirmed | W-{{$order->id}}</title>
 </head>
 <body style="background-color: #eeeeee;">
