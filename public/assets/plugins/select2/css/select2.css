@@ -112,7 +112,7 @@
   width: auto;
   opacity: 0;
   z-index: 99;
-  background-color: #fff;
+  background-color: #101920;
   filter: alpha(opacity=0); }
 
 .select2-hidden-accessible {
@@ -166,7 +166,7 @@
   right: auto; }
 
 .select2-container--default.select2-container--disabled .select2-selection--single {
-  background-color: #eee;
+  background-color: #101920;
   cursor: default; }
   .select2-container--default.select2-container--disabled .select2-selection--single .select2-selection__clear {
     display: none; }
@@ -196,7 +196,7 @@
     margin-right: 10px;
     padding: 1px; }
   .select2-container--default .select2-selection--multiple .select2-selection__choice {
-    background-color: #e4e4e4;
+    background-color: #101920;
     border: 1px solid #aaa;
     border-radius: 4px;
     cursor: default;
