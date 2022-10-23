@@ -123,4 +123,13 @@ Route::group(['middleware' => 'auth', 'prevent-back-history'], function () {
     Route::get('/order-track/view', [App\Http\Controllers\OrderTrackingController::class, 'view'])->middleware('can:Track Order');
     Route::post('/order-track/results', [App\Http\Controllers\OrderTrackingController::class, 'tracking_results'])->middleware('can:Track Order');
 
+    //Job Routes
+    Route::get('/job/view', [App\Http\Controllers\JobController::class, 'view'])->middleware('can:View Job');
+    Route::get('/job/add', [App\Http\Controllers\JobController::class, 'create'])->middleware('can:Add Job');
+    Route::post('/job/store', [App\Http\Controllers\JobController::class, 'store'])->middleware('can:Add Job');
+    Route::get('/job/edit/{id}', [App\Http\Controllers\JobController::class, 'edit'])->middleware('can:Edit Job');
+    Route::post('/job/update/{id}', [App\Http\Controllers\JobController::class, 'update'])->middleware('can:Edit Job');
+    Route::get('/job/destroy/{id}', [App\Http\Controllers\JobController::class, 'destroy'])->middleware('can:Delete Job');
+    
+
 });

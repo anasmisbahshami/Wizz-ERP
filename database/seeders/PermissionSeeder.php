@@ -74,8 +74,16 @@ class PermissionSeeder extends Seeder
             ['name' => 'Acknowledge Order','guard_name' => 'web',],
             ['name' => 'View Order Details','guard_name' => 'web',],
             ['name' => 'Edit Order Details','guard_name' => 'web',],
-            
-            
+                        
+            ['name' => 'Add Job','guard_name' => 'web',],
+            ['name' => 'View Job','guard_name' => 'web',],
+            ['name' => 'Edit Job','guard_name' => 'web',],
+            ['name' => 'Delete Job','guard_name' => 'web',],
+
+            ['name' => 'View Job Application','guard_name' => 'web',],
+            ['name' => 'Edit Job Application','guard_name' => 'web',],
+            ['name' => 'Delete Job Application','guard_name' => 'web',],
+
         ]);
 
         //Super Admin

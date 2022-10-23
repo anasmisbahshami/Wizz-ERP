@@ -141,7 +141,18 @@
                 @endcanany
             @endcanany
 
-
+            {{-- Recruitment Management --}}
+            @canany(['View Job'])
+                <li class="nav-item nav-category">Recruitment Management</li>
+                @canany(['View Job'])
+                    <li class="nav-item {{ active_class(['job/*']) }}">
+                        <a href="{{ url('job/view') }}" class="nav-link">
+                            <i class="link-icon" data-feather="codepen"></i>
+                            <span class="link-title">Job Openings</span>
+                        </a>
+                    </li>
+                @endcanany
+            @endcanany
 
         </ul>
     </div>
