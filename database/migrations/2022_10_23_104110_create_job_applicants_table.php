@@ -23,6 +23,7 @@ class CreateJobApplicantsTable extends Migration
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
             $table->string('resume')->nullable();
+            $table->string('short_listed')->nullable()->default('No');
             $table->timestamps();
         });
     }

@@ -5,6 +5,12 @@
   <link href="{{ asset('assets/plugins/datatables-net/dataTables.bootstrap4.css') }}" rel="stylesheet" />
 @endpush
 
+<style>
+  .custom:hover{
+    color: #E09946 !important;
+  }
+</style>
+
 @section('content')
   <nav class="page-breadcrumb">
     <ol class="breadcrumb">
@@ -75,7 +81,7 @@
                   <td class="text-center">{{ $serial + 1 }}</td>
                   <td class="text-center">{{ $job->title }}</td>
                   <td class="text-center">{{ $job->city->name }}</td>
-                  <td class="text-center">5</td>
+                  <td class="text-center">{{ $job->applicants->count() }}</td>
                   <td class="text-center">{{ $job->created_at->format('Y-m-d') }}</td>
                   <td class="text-center">  
                       @can('Edit Job')
@@ -112,6 +118,40 @@
                           </div>
                         </div>
                       @endcan
+                      
+                      @can('View Job Applicant')
+                      @if ($job->applicants->count() > 0)
+                      <!-- Button trigger modal -->
+                      <a title="Applicants" data-toggle="modal" data-target="#applicantsModal{{$serial}}">
+                        <button type="button" class="btn btn-primary">
+                          View Applicants
+                        </button>
+                      </a>
+                      <!-- Modal -->
+                      <div class="modal fade text-left" id="applicantsModal{{$serial}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Applicants for {{ $job->title }}:</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                            <ul>
+                              @foreach($job->applicants as $applicant)
+                                <li style="line-height: 130%;"><a style="color:white;" class="custom" href="{{url('/job/view-applicant/'.encrypt($applicant->id))}}">{{ $applicant->first_name.' '.$applicant->last_name }}</a>@if($applicant->short_listed == 'Yes') (Shortlisted) @endif</li>
+                              @endforeach
+                            </ul>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    @endif
+                    @endcan
                   </td>
                 </tr>
                 @endforeach

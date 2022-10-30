@@ -84,6 +84,10 @@ class PermissionSeeder extends Seeder
             ['name' => 'Edit Job Application','guard_name' => 'web',],
             ['name' => 'Delete Job Application','guard_name' => 'web',],
 
+            ['name' => 'View Job Applicant','guard_name' => 'web',],
+            ['name' => 'Shortlist Job Applicant','guard_name' => 'web',],
+            ['name' => 'Delete Job Applicant','guard_name' => 'web',],
+            
         ]);
 
         //Super Admin

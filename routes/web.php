@@ -131,5 +131,9 @@ Route::group(['middleware' => 'auth', 'prevent-back-history'], function () {
     Route::post('/job/update/{id}', [App\Http\Controllers\JobController::class, 'update'])->middleware('can:Edit Job');
     Route::get('/job/destroy/{id}', [App\Http\Controllers\JobController::class, 'destroy'])->middleware('can:Delete Job');
     
-
+    //Job Applicant Routes
+    Route::get('/job/view-applicant/{id}', [App\Http\Controllers\JobApplicantController::class, 'view'])->middleware('can:View Job Applicant');
+    Route::get('/job/applicant-resume/{id}', [App\Http\Controllers\JobApplicantController::class, 'download_resume'])->middleware('can:View Job Applicant');
+    Route::get('/job/applicant-delete/{id}', [App\Http\Controllers\JobApplicantController::class, 'delete_applicant'])->middleware('can:Delete Job Applicant');
+    Route::post('/job/shortlist-applicant/{id}', [App\Http\Controllers\JobApplicantController::class, 'shortlist'])->middleware('can:Shortlist Job Applicant');
 });

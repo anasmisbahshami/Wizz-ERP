@@ -76,6 +76,11 @@ class JobController extends Controller
         foreach($job->responsibilities as $key => $job_responsibility){
             $job_responsibility->delete();
         }
+
+        foreach($job->applicants as $key => $applicant){
+            $applicant->delete();
+        }
+
         $job->delete();
         
         return back()->with('success','Job has been deleted');

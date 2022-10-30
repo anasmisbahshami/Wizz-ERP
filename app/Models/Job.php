@@ -16,4 +16,8 @@ class Job extends Model
     public function responsibilities(){
         return $this->hasMany(JobResponsibility::class, 'job_id', 'id');
     }
+
+    public function applicants(){
+        return $this->hasMany(JobApplicant::class, 'job_id', 'id');
+    }
 }
