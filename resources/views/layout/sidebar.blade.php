@@ -154,6 +154,19 @@
                 @endcanany
             @endcanany
 
+            {{-- GPS Tracking --}}
+            @canany(['View GPS'])
+                <li class="nav-item nav-category">GPS Tracking</li>
+                @canany(['View GPS'])
+                    <li class="nav-item {{ active_class(['gps/*']) }}">
+                        <a href="{{ url('gps/view') }}" class="nav-link">
+                            <i class="link-icon" data-feather="map-pin"></i>
+                            <span class="link-title">Track Vehicle</span>
+                        </a>
+                    </li>
+                @endcanany
+            @endcanany
+
         </ul>
     </div>
 </nav>

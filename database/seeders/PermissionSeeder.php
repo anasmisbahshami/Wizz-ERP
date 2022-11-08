@@ -87,6 +87,10 @@ class PermissionSeeder extends Seeder
             ['name' => 'View Job Applicant','guard_name' => 'web',],
             ['name' => 'Shortlist Job Applicant','guard_name' => 'web',],
             ['name' => 'Delete Job Applicant','guard_name' => 'web',],
+
+            ['name' => 'View GPS','guard_name' => 'web',],
+            ['name' => 'Track GPS','guard_name' => 'web',],
+
             
         ]);
 

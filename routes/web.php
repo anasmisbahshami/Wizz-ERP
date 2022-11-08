@@ -136,4 +136,10 @@ Route::group(['middleware' => 'auth', 'prevent-back-history'], function () {
     Route::get('/job/applicant-resume/{id}', [App\Http\Controllers\JobApplicantController::class, 'download_resume'])->middleware('can:View Job Applicant');
     Route::get('/job/applicant-delete/{id}', [App\Http\Controllers\JobApplicantController::class, 'delete_applicant'])->middleware('can:Delete Job Applicant');
     Route::post('/job/shortlist-applicant/{id}', [App\Http\Controllers\JobApplicantController::class, 'shortlist'])->middleware('can:Shortlist Job Applicant');
+
+    //GPS Tracking Routes
+    Route::get('/gps/view', [App\Http\Controllers\GPSTrackingController::class, 'view'])->middleware('can:View GPS');
+    Route::get('/gps/track/{id}', [App\Http\Controllers\GPSTrackingController::class, 'track'])->middleware('can:Track GPS');
+
+
 });
