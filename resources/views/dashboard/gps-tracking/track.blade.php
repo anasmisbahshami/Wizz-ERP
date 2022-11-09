@@ -27,17 +27,100 @@
   
   <div id="map"></div>
 
+  <script src="{{ asset('js/app.js') }}"></script>
+
+  @php $vehicle = $trip->vehicle->name @endphp
+
   <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnJmwMUQ_QkQauXOhMiM5Z5myI56iQ2qs&callback=initMap&v=weekly"></script>
+  
 
 <script>
+  var vehicle = @json($vehicle);
+
     let map;
+    let origin = { lat: 33.588025837516355, lng: 73.135322842328 };
+    let destination = { lat: 31.558, lng: 74.3507 };
+    let tripCoordinates;
+    let OriginMarker;
+    let DestinationMarker;
+    let tripPath;
+
     function initMap() {
-        map = new google.maps.Map(document.getElementById("map"), {
-            center: { lat: 33.588025837516355, lng: 73.135322842328 },
-            zoom: 15,
-        });
+
+      //Intializing Map
+      map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 6,
+        center: origin,
+      });
+      
+      //Setting Origin Marker
+      OriginMarker = new google.maps.Marker({
+        position: origin,
+        map,
+        title: vehicle,
+      });
+
+      //Setting Destination Marker
+      DestinationMarker = new google.maps.Marker({
+        position: destination,
+        map,
+      });
+
+      //Origin & Destination Coordinates
+      tripCoordinates = [
+        origin,
+        destination,
+      ];
+
+      //Setting Polyline from Origin to Destination
+      tripPath = new google.maps.Polyline({
+        path: tripCoordinates,
+        geodesic: true,
+        strokeColor: "#FF0000",
+        strokeOpacity: 1.0,
+        strokeWeight: 1.5,
+      });
+
+      tripPath.setMap(map);
+
     }
-    window.initMap = initMap;
+      // window.initMap = initMap;
+
+    //Update Marker Position
+    function updatePosition(newlat, newlng){
+      
+      //Setting Polyline to Null
+      tripPath.setMap(null);
+
+      const updatedOrigin = { lat: newlat, lng: newlng};
+      OriginMarker.setPosition(updatedOrigin);
+      map.setCenter(updatedOrigin);
+
+      //Updated Origin & Destination Coordinates
+      tripCoordinates = [
+        updatedOrigin,
+        destination,
+      ];
+
+      //Setting Polyline from Updated Origin to Destination
+      tripPath = new google.maps.Polyline({
+        path: tripCoordinates,
+        geodesic: true,
+        strokeColor: "#FF0000",
+        strokeOpacity: 1.0,
+        strokeWeight: 1.5,
+      });
+
+      tripPath.setMap(map);
+
+    }
+
+    //Capturing Event Fired Pusher
+    Echo.channel('Wizz-ERP').listen('VehicleMoved', (e) => {
+      console.log(e);
+      updatePosition(e.lat, e.lng);
+    });
+
 </script>
 @endsection
 

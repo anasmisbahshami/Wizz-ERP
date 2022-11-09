@@ -141,5 +141,8 @@ Route::group(['middleware' => 'auth', 'prevent-back-history'], function () {
     Route::get('/gps/view', [App\Http\Controllers\GPSTrackingController::class, 'view'])->middleware('can:View GPS');
     Route::get('/gps/track/{id}', [App\Http\Controllers\GPSTrackingController::class, 'track'])->middleware('can:Track GPS');
 
+    Route::get('/move', function () {
+        event(new \App\Events\VehicleMoved(31.6018, 74.3206));
+    });
 
 });
