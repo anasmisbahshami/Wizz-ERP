@@ -20,7 +20,11 @@ class CitySeeder extends Seeder
         $cities = json_decode($json);
   
         foreach ($cities as $city) {
-            City::create(["name" => $city->city]);
+            City::create([
+                "name" => $city->city,
+                "latitude" => $city->lat,
+                "longitude" => $city->lng,
+            ]);
         }
     }
 }

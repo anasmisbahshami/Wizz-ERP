@@ -27,6 +27,8 @@ class CreateOrdersTable extends Migration
             $table->string('notify_complete')->nullable()->default('0');
             $table->timestamps();
         });
+        
+        \DB::statement("ALTER TABLE orders AUTO_INCREMENT = 12000;");
     }
 
     /**

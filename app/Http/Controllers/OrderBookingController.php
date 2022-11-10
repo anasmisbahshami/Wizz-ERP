@@ -66,8 +66,6 @@ class OrderBookingController extends Controller
         $trip->route_id = $request->route_id;
         $trip->date = $item->created_at;
         $trip->rate = $request->rate;
-        $trip->status = 'In Progress';
-        $trip->notify_start = 1;
         $trip->save();
 
         return redirect()->back()->with('success', 'Order Item Added Successfully!');

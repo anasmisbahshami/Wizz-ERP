@@ -53,7 +53,6 @@
             <div class="form-group col-md-6">
                 <label for="email">Rate<span style="color:red;"> *</span></label>
                 <input required readonly type="number" step="any" class="form-control" id="rate" name="rate" placeholder="Rs 10,000">
-                <input type="hidden" name="notify_start" value="1">
             </div>
               <div class="form-group col-md-6">
                 <label for="role">Date<span style="color:red;"> *</span></label>

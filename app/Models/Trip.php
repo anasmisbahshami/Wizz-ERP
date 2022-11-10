@@ -9,7 +9,7 @@ class Trip extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['vehicle_id', 'route_id', 'date', 'rate','status','notify_start','notify_complete'];
+    protected $fillable = ['vehicle_id', 'route_id', 'date', 'rate', 'status', 'latitude', 'longitude', 'notify_start','notify_complete'];
 
     public function vehicle(){
         return $this->hasOne(Vehicle::class, 'id', 'vehicle_id');

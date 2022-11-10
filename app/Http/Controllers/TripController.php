@@ -4,12 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Trip;
+use Location;
 
 class TripController extends Controller
 {
     public function view()
     {
-        $trips = Trip::all();
+        $InQueue = Trip::where('status','In Queue')->get();
+        $Started = Trip::where('status','Started')->get();
+        $Completed = Trip::where('status','Completed')->get();
+
+        $trips = $InQueue->merge($Started);
+        $trips = $trips->merge($Completed);
+
         return view('dashboard.trips.view', compact('trips'));
     }
 
@@ -46,6 +53,62 @@ class TripController extends Controller
         $trip = Trip::find($id);
 
         return view('dashboard.trips.edit', compact('trip'));
+    }
+
+    public function complete($id)
+    {
+        $id = decrypt($id);
+        $trip = Trip::find($id);
+        $trip->status = 'Completed';
+        $trip->notify_start = 0;
+        $trip->notify_complete = 1;
+        $trip->save();
+
+        return redirect()->back()->with('success', 'Trip Marked as Completed!');
+    }
+
+    public function start($id)
+    {
+        $id = decrypt($id);
+        $trip = Trip::find($id);
+
+        //Getting IP Address of User
+        $ipaddress = '';
+        
+        if (isset($_SERVER['HTTP_CLIENT_IP']))
+            $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+        else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+            $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        else if(isset($_SERVER['HTTP_X_FORWARDED']))
+            $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+        else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
+            $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+        else if(isset($_SERVER['HTTP_FORWARDED']))
+            $ipaddress = $_SERVER['HTTP_FORWARDED'];
+        else if(isset($_SERVER['REMOTE_ADDR']))
+            $ipaddress = $_SERVER['REMOTE_ADDR'];
+        else
+            $ipaddress = '127.0.0.1';
+
+        //Getting Latitude and Longitude from IP
+        if($ipaddress != '127.0.0.1') {
+            $location = Location::get($ipaddress);
+            $locationArray = json_decode(json_encode($location), true);
+            $latitude = $locationArray['latitude'];
+            $longitude = $locationArray['longitude'];
+        }else{
+            $latitude = 33.6665;
+            $longitude = 73.0516;
+        }
+
+        //Updating Latitude, Longitude & Status of Trip
+        $trip->latitude = $latitude;
+        $trip->longitude = $longitude;
+        $trip->status = 'Started';
+        $trip->notify_start = 1;
+        $trip->save();
+
+        return redirect()->back()->with('success', 'Trip Marked as Started!');
     }
 
     public function update(Request $request, $id)

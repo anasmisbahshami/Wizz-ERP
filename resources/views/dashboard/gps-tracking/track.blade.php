@@ -35,11 +35,20 @@
   
 
 <script>
+  //Vehicle Name
   var vehicle = @json($vehicle);
 
+  //Origin Latitude & Longitude
+  var origin_latitude = @json($origin_latitude);
+  var origin_longitude = @json($origin_longitude);
+
+  //Destination Latitude & Longitude
+  var destination_latitude = @json($destination_latitude);
+  var destination_longitude = @json($destination_longitude);
+
     let map;
-    let origin = { lat: 33.588025837516355, lng: 73.135322842328 };
-    let destination = { lat: 31.558, lng: 74.3507 };
+    let origin = { lat: origin_latitude, lng: origin_longitude };
+    let destination = { lat: destination_latitude, lng: destination_longitude };
     let tripCoordinates;
     let OriginMarker;
     let DestinationMarker;

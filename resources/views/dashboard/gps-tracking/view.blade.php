@@ -41,8 +41,8 @@
                   <th>
                     Nature
                   </th>
-                  <th>
-                    Date
+                  <th class="text-center align-middle">
+                    Status
                   </th>
                   @can('Track GPS')
                   <th class="text-center" data-orderable="false">
@@ -59,7 +59,16 @@
                   <td>{{ $trip->route->name }}</td>
                   <td>{{ $trip->vehicle->driver->name }}</td>
                   <td>{{ $trip->vehicle->type }}</td>
-                  <td>{{ \Carbon\Carbon::parse($trip->date)->format('d M Y') }}</td>
+                  <td class="text-center align-middle">
+                    <!-- In Queue Trip -->
+                    @if($trip->status == 'In Queue')
+                    <h5><span class="badge badge-danger">{{ $trip->status }}</span></h5>                  
+                    @endif
+                    <!-- Started Trip -->
+                    @if($trip->status == 'Started')
+                    <h5><span class="badge badge-primary">{{ $trip->status }}</span></h5>                  
+                    @endif
+                  </td>
                   <td class="text-center">
                       @can('Track GPS')
                         <a title="Track" href="{{ url('gps/track/'.encrypt($trip->id)) }}">

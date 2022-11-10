@@ -70,7 +70,7 @@
                   <th>
                     Rate
                   </th>
-                  <th>
+                  <th class="text-center align-middle">
                     Status
                   </th>
                   <th class="text-center" data-orderable="false">
@@ -88,18 +88,75 @@
                   <td>{{ $trip->vehicle->type }}</td>
                   <td>{{ \Carbon\Carbon::parse($trip->date)->format('d M Y') }}</td>
                   <td>Rs {{ number_format($trip->rate, 2) }}</td>
-                  <td>{{ $trip->status }}</td>
+                  <td class="text-center align-middle">
+
+                    <!-- In Queue Status -->
+                    @if($trip->status == 'In Queue')
+                    <h5><span class="badge badge-danger" data-toggle="modal" data-target="#startModal{{$serial}}">{{ $trip->status }}</span></h5>
+                    @can('Edit Trip')
+                      <div class="modal fade text-left" id="startModal{{$serial}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Confirm your action!</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                              </button>
+                          </div>
+                          <div class="modal-body">
+                              Mark this Trip as Started?
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                              <a href="{{ url('trip/start/'.encrypt($trip->id)) }}" type="button" class="btn btn-primary">Yes</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      @endcan
+                      
+                    <!-- Started Status -->
+                    @elseif($trip->status == 'Started')
+                      <h5><span class="badge badge-primary" data-toggle="modal" data-target="#completeModal{{$serial}}">{{ $trip->status }}</span></h5>
+                      @can('Edit Trip')
+                      <div class="modal fade text-left" id="completeModal{{$serial}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Confirm your action!</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                              </button>
+                          </div>
+                          <div class="modal-body">
+                              Mark this Trip as Complete?
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                              <a href="{{ url('trip/complete/'.encrypt($trip->id)) }}" type="button" class="btn btn-primary">Yes</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>  
+                      @endcan
+  
+                    <!-- Complete Status -->
+                    @elseif($trip->status == 'Completed')
+                    <h5><span class="badge badge-success">{{ $trip->status }}</span></h5>                  
+                    @endif
+                  </td>
+
                   <td class="text-center">  
                       @can('Edit Trip')
-                        <a title="Edit" @if ($trip->status == 'Completed') style="pointer-events: none;" @endif href="{{ url('trip/edit/'.encrypt($trip->id)) }}">
-                          <button @if ($trip->status == 'Completed') disabled @endif type="button" class="btn btn-primary btn-icon">
+                        <a title="Edit" @if ($trip->status == 'Completed' || $trip->status == 'Started') style="pointer-events: none;" @endif href="{{ url('trip/edit/'.encrypt($trip->id)) }}">
+                          <button @if ($trip->status == 'Completed' || $trip->status == 'Started') disabled @endif type="button" class="btn btn-primary btn-icon">
                             <i data-feather="edit"></i>
                           </button>
                         </a>
                       @endcan
                       @can('Delete Trip')
-                        <a title="Delete" data-toggle="modal" data-target="#actionModal{{$serial}}">
-                          <button type="button" class="btn btn-primary btn-icon">
+                        <a title="Delete" data-toggle="modal" @if ($trip->status == 'Started') style="pointer-events: none;" @endif data-target="#actionModal{{$serial}}">
+                          <button @if ($trip->status == 'Started') disabled @endif type="button" class="btn btn-primary btn-icon">
                             <i data-feather="trash-2"></i>
                           </button>
                         </a>
