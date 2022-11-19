@@ -91,10 +91,7 @@ Route::group(['middleware' => 'auth', 'prevent-back-history'], function () {
     Route::get('/trip/acknowledge/{id}', [App\Http\Controllers\TripController::class, 'acknowledge'])->middleware('can:Acknowledge Trip');
     Route::get('/trip/start/{id}', [App\Http\Controllers\TripController::class, 'start'])->middleware('can:Edit Trip Status');
     Route::get('/trip/complete/{id}', [App\Http\Controllers\TripController::class, 'complete'])->middleware('can:Edit Trip Status');
-
     Route::get('/trip/gps/coordinates/{id}', [App\Http\Controllers\TripController::class, 'current_gps_coordinates'])->middleware('can:GPS Coordinates Trip');
-
-    
 
     //Bill Routes
     Route::get('/bill/view', [App\Http\Controllers\BillController::class, 'view'])->middleware('can:View Bill');
@@ -146,9 +143,4 @@ Route::group(['middleware' => 'auth', 'prevent-back-history'], function () {
     //GPS Tracking Routes
     Route::get('/gps/view', [App\Http\Controllers\GPSTrackingController::class, 'view'])->middleware('can:View GPS');
     Route::get('/gps/track/{id}', [App\Http\Controllers\GPSTrackingController::class, 'track'])->middleware('can:Track GPS');
-
-    Route::get('/move', function () {
-        event(new \App\Events\VehicleMoved(31.6018, 74.3206));
-    });
-
 });
