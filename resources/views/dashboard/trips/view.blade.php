@@ -58,18 +58,22 @@
                   <th>
                     Route
                   </th>
+                  @if (!\Auth::user()->hasRole('Driver'))
                   <th>
                     Driver
                   </th>
                   <th>
                     Nature
                   </th>
+                  @endif
                   <th>
                     Date
                   </th>
+                  @if (!\Auth::user()->hasRole('Driver'))
                   <th>
                     Rate
                   </th>
+                  @endif
                   <th class="text-center align-middle">
                     Status
                   </th>
@@ -84,16 +88,20 @@
                   <td>{{ $serial + 1 }}</td>
                   <td>{{ $trip->vehicle->name }}</td>
                   <td>{{ $trip->route->name }}</td>
-                  <td>{{ $trip->vehicle->driver->name }}</td>
-                  <td>{{ $trip->vehicle->type }}</td>
-                  <td>{{ \Carbon\Carbon::parse($trip->date)->format('d M Y') }}</td>
-                  <td>Rs {{ number_format($trip->rate, 2) }}</td>
+                  @if (!\Auth::user()->hasRole('Driver'))
+                    <td>{{ $trip->vehicle->driver->name }}</td>
+                    <td>{{ $trip->vehicle->type }}</td>
+                  @endif
+                    <td>{{ \Carbon\Carbon::parse($trip->date)->format('d M Y') }}</td>
+                  @if (!\Auth::user()->hasRole('Driver'))
+                    <td>Rs {{ number_format($trip->rate, 2) }}</td>
+                  @endif
                   <td class="text-center align-middle">
 
                     <!-- In Queue Status -->
                     @if($trip->status == 'In Queue')
                     <h5><span class="badge badge-danger" data-toggle="modal" data-target="#startModal{{$serial}}">{{ $trip->status }}</span></h5>
-                    @can('Edit Trip')
+                    @can('Edit Trip Status')
                       <div class="modal fade text-left" id="startModal{{$serial}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                           <div class="modal-content">
@@ -118,7 +126,7 @@
                     <!-- Started Status -->
                     @elseif($trip->status == 'Started')
                       <h5><span class="badge badge-primary" data-toggle="modal" data-target="#completeModal{{$serial}}">{{ $trip->status }}</span></h5>
-                      @can('Edit Trip')
+                      @can('Edit Trip Status')
                       <div class="modal fade text-left" id="completeModal{{$serial}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                           <div class="modal-content">
@@ -146,7 +154,8 @@
                     @endif
                   </td>
 
-                  <td class="text-center">  
+                  <td class="text-center">
+                      <!-- Edit Trip-->
                       @can('Edit Trip')
                         <a title="Edit" @if ($trip->status == 'Completed' || $trip->status == 'Started') style="pointer-events: none;" @endif href="{{ url('trip/edit/'.encrypt($trip->id)) }}">
                           <button @if ($trip->status == 'Completed' || $trip->status == 'Started') disabled @endif type="button" class="btn btn-primary btn-icon">
@@ -154,6 +163,7 @@
                           </button>
                         </a>
                       @endcan
+                      <!-- Delete Trip-->
                       @can('Delete Trip')
                         <a title="Delete" data-toggle="modal" @if ($trip->status == 'Started') style="pointer-events: none;" @endif data-target="#actionModal{{$serial}}">
                           <button @if ($trip->status == 'Started') disabled @endif type="button" class="btn btn-primary btn-icon">
@@ -180,6 +190,7 @@
                           </div>
                         </div>
                       @endcan
+                      <!-- Acknowledge Trip-->
                       @can('Acknowledge Trip')
                       @if ($trip->notify_complete == '1' || $trip->notify_start == '1')
                         <a title="Acknowledge" href="{{ url('trip/acknowledge/'.encrypt($trip->id)) }}">
@@ -188,6 +199,14 @@
                           </button>
                         </a>
                       @endif
+                      @endcan
+                      <!-- Current GPS Coordinates-->
+                      @can('GPS Coordinates Trip')
+                        <a title="GPS Coordinates" @if ($trip->status == 'In Queue' || $trip->status == 'Completed') style="pointer-events: none;" @endif  href="{{ url('/trip/gps/coordinates/'.encrypt($trip->id)) }}">
+                          <button @if ($trip->status == 'In Queue' || $trip->status == 'Completed') disabled @endif type="button" class="btn btn-primary btn-icon">
+                            <i data-feather="compass"></i>
+                          </button>
+                        </a>
                       @endcan
                   </td>
                 </tr>

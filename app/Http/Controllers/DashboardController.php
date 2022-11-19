@@ -12,8 +12,12 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $start_date = Carbon::now()->subMonth(1)->format('d-F-Y');
-        $end_date = Carbon::now()->format('d-F-Y');
-        return view('dashboard.dashboard', compact('start_date', 'end_date'));
+        if(\Auth::user()->hasAnyRole(['Super Admin','Admin'])){
+            $start_date = Carbon::now()->subMonth(1)->format('d-F-Y');
+            $end_date = Carbon::now()->format('d-F-Y');
+            return view('dashboard.dashboard', compact('start_date', 'end_date'));
+        }else{
+            return redirect('/profile/view');
+        }
     }
 }

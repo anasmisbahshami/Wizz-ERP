@@ -2,9 +2,10 @@
   $NewSubsciptions = \App\Models\UserSubscription::where('notify_subscribed', '1')->get();
   $TripStarted = \App\Models\Trip::where('notify_start', '1')->get();
   $TripFinish = \App\Models\Trip::where('notify_complete', '1')->get();
+  $AssignedTrips = \App\Models\Trip::where('status', 'In Queue')->get();
   
   $DriverStartTrip = 0;
-  foreach ($TripStarted as $key => $trip) {
+  foreach ($AssignedTrips as $key => $trip) {
     if ($trip->vehicle->driver->id == Auth::id()) {
       $DriverStartTrip++;
     }
@@ -103,7 +104,7 @@
           <div class="dropdown-body">
 
           <!-- Trip Start Notifications-->
-          @foreach($TripStarted as $serial => $tripStart)
+          @foreach($AssignedTrips as $serial => $tripStart)
             @if ($tripStart->vehicle->driver->id == Auth::id())
               <a href="{{ url('/trip/view')}}" class="dropdown-item">
                 <div class="icon">
@@ -118,7 +119,7 @@
           @endforeach
 
           <!-- If Empty Notifications-->
-          @if ($TripStarted->isEmpty())
+          @if ($AssignedTrips->isEmpty())
           <a class="dropdown-item">
             <div class="content">
               <p>No New Notifications</p>

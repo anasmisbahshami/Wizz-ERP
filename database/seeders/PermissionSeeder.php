@@ -60,6 +60,9 @@ class PermissionSeeder extends Seeder
             ['name' => 'Edit Trip','guard_name' => 'web',],
             ['name' => 'Delete Trip','guard_name' => 'web',],
             ['name' => 'Acknowledge Trip','guard_name' => 'web',],
+            ['name' => 'Edit Trip Status','guard_name' => 'web',],
+            ['name' => 'GPS Coordinates Trip','guard_name' => 'web',],
+
 
             ['name' => 'View Bill','guard_name' => 'web',],
             ['name' => 'Generate Monthly Bill','guard_name' => 'web',],
@@ -106,8 +109,13 @@ class PermissionSeeder extends Seeder
         $officer = Role::create(['name' => 'Officer', 'description' => 'This is the role for office users.' ]);
         User::find(3)->assignRole($officer);
 
-        //Driver
+        //Driver Role
         $driver = Role::create(['name' => 'Driver', 'description' => 'This is the role for drivers.' ]);
+
+        //Driver Permissions
+        $driver->syncPermissions(['View Trip','Edit Trip Status','GPS Coordinates Trip']);
+
+        //Assigning Permission To Driver Role
         User::find(4)->assignRole($driver);
 
         //User

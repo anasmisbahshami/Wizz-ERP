@@ -41,6 +41,9 @@
                   <th>
                     Nature
                   </th>
+                  <th>
+                    Date
+                  </th>
                   <th class="text-center align-middle">
                     Status
                   </th>
@@ -59,6 +62,7 @@
                   <td>{{ $trip->route->name }}</td>
                   <td>{{ $trip->vehicle->driver->name }}</td>
                   <td>{{ $trip->vehicle->type }}</td>
+                  <td>{{ \Carbon\Carbon::parse($trip->date)->format('d M Y') }}</td>
                   <td class="text-center align-middle">
                     <!-- In Queue Trip -->
                     @if($trip->status == 'In Queue')

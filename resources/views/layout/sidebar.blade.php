@@ -14,13 +14,34 @@
         <ul class="nav">
 
             {{-- Dashboard --}}
-            <li class="nav-item nav-category">Main</li>
-            <li class="nav-item {{ active_class(['/']) }}">
-                <a href="{{ url('/') }}" class="nav-link">
-                    <i class="link-icon" data-feather="airplay"></i>
-                    <span class="link-title">Dashboard</span>
-                </a>
-            </li>
+            @if(\Auth::user()->hasAnyRole(['Super Admin','Admin']))
+                <li class="nav-item nav-category">Main</li>
+                <li class="nav-item {{ active_class(['/']) }}">
+                    <a href="{{ url('/') }}" class="nav-link">
+                        <i class="link-icon" data-feather="airplay"></i>
+                        <span class="link-title">Dashboard</span>
+                    </a>
+                </li>
+            @endif
+
+            {{-- Driver Interface --}}
+            @if(\Auth::user()->hasRole('Driver'))
+                <li class="nav-item nav-category">My Profile</li>
+                <li class="nav-item {{ active_class(['profile/*']) }}">
+                    <a href="{{ url('/profile/view') }}" class="nav-link">
+                        <i class="link-icon" data-feather="user"></i>
+                        <span class="link-title">Profile</span>
+                    </a>
+                </li>
+
+                <li class="nav-item nav-category">Active Trips</li>
+                <li class="nav-item {{ active_class(['trip/*']) }}">
+                    <a href="{{ url('trip/view') }}" class="nav-link">
+                        <i class="link-icon" data-feather="truck"></i>
+                        <span class="link-title">Trips</span>
+                    </a>
+                </li>
+            @endif
 
             {{-- User Management --}}
             @canany(['View Role', 'View User'])
@@ -89,26 +110,28 @@
             @endcanany
 
             {{-- Automated Manager --}}
-            @canany(['View Trip', 'View Bill'])
-                <li class="nav-item nav-category">Automated Manager</li>
-                @canany(['View Trip'])
-                    <li class="nav-item {{ active_class(['trip/*']) }}">
-                        <a href="{{ url('trip/view') }}" class="nav-link">
-                            <i class="link-icon fa fa-sign-in"></i>
-                            <span class="link-title">Trip Records</span>
-                        </a>
-                    </li>
-                @endcanany
+            @if(!\Auth::user()->hasRole('Driver'))
+                @canany(['View Trip', 'View Bill'])
+                    <li class="nav-item nav-category">Automated Manager</li>
+                    @canany(['View Trip'])
+                        <li class="nav-item {{ active_class(['trip/*']) }}">
+                            <a href="{{ url('trip/view') }}" class="nav-link">
+                                <i class="link-icon fa fa-sign-in"></i>
+                                <span class="link-title">Trip Records</span>
+                            </a>
+                        </li>
+                    @endcanany
 
-                @canany(['View Bill'])
-                    <li class="nav-item {{ active_class(['bill/*']) }}">
-                        <a href="{{ url('bill/view') }}" class="nav-link">
-                            <i class="link-icon" data-feather="printer"></i>
-                            <span class="link-title">Generate Bill</span>
-                        </a>
-                    </li>
+                    @canany(['View Bill'])
+                        <li class="nav-item {{ active_class(['bill/*']) }}">
+                            <a href="{{ url('bill/view') }}" class="nav-link">
+                                <i class="link-icon" data-feather="printer"></i>
+                                <span class="link-title">Generate Bill</span>
+                            </a>
+                        </li>
+                    @endcanany
                 @endcanany
-            @endcanany
+            @endif
 
             {{-- Order Management --}}
             @canany(['Book Order', 'View Order', 'Track Order'])
