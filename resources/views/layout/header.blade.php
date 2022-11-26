@@ -1,9 +1,17 @@
 @php
+  //Super Admin, Admin Notifications
   $NewSubsciptions = \App\Models\UserSubscription::where('notify_subscribed', '1')->get();
   $TripStarted = \App\Models\Trip::where('notify_start', '1')->get();
   $TripFinish = \App\Models\Trip::where('notify_complete', '1')->get();
   $AssignedTrips = \App\Models\Trip::where('status', 'In Queue')->get();
+  $PaidOrders = \App\Models\Order::where('notify_paid', 1)->get();
   
+  //User Notification
+  $StartedOrders = \Auth::user()->orders->where('notify_start', 1);
+  $InProgressOrders = \Auth::user()->orders->where('notify_in_progress', 1);
+  $CompletedOrders = \Auth::user()->orders->where('notify_complete', 1);
+  
+  //Driver Notifications
   $DriverStartTrip = 0;
   foreach ($AssignedTrips as $key => $trip) {
     if ($trip->vehicle->driver->id == Auth::id()) {
@@ -25,13 +33,13 @@
       <li style="margin-right:15px;" class="nav-item dropdown nav-notifications">
         <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i data-feather="bell"></i>
-          <div @if(count($NewSubsciptions) || count($TripStarted) || count($TripFinish) ) class="indicator" @endif>
+          <div @if(count($NewSubsciptions) || count($TripStarted) || count($TripFinish) || count($PaidOrders)) class="indicator" @endif>
             <div class="circle"></div>
           </div>
         </a>
         <div class="dropdown-menu" aria-labelledby="notificationDropdown">
           <div class="dropdown-header d-flex align-items-center justify-content-between">
-            <p class="mb-0 font-weight-medium">{{ count($NewSubsciptions) + count($TripStarted) + count($TripFinish) }} New Notifications</p>
+            <p class="mb-0 font-weight-medium">{{ count($NewSubsciptions) + count($TripStarted) + count($TripFinish) + count($PaidOrders) }} New Notifications</p>
           </div>
           <div class="dropdown-body">
             
@@ -48,6 +56,19 @@
             </a>
           @endforeach
 
+          <!-- Paid Orders Notifications-->
+          @foreach($PaidOrders as $serial => $order)
+          <a href="{{ url('/order/view')}}" class="dropdown-item">
+            <div class="icon">
+              <i data-feather="shopping-cart"></i>
+            </div>
+            <div class="content">
+              <p>Order#{{ $order->id }} of Rs {{ number_format($order->items->sum('price'), 0) }} has been paid!</p>
+              <p class="sub-text text-muted">{{ $order->updated_at->diffForHumans() }}</p>
+            </div>
+          </a>
+          @endforeach
+
           <!-- Trip Start Notifications-->
           @foreach($TripStarted as $serial => $tripStart)
           <a href="{{ url('/trip/view')}}" class="dropdown-item">
@@ -60,7 +81,7 @@
             </div>
           </a>
           @endforeach
-        
+
         <!-- Trip Finish Notifications-->
         @foreach($TripFinish as $serial => $tripFinish)
         <a href="{{ url('/trip/view')}}" class="dropdown-item">
@@ -75,7 +96,7 @@
         @endforeach
 
         <!-- If Empty Notifications-->
-        @if ($TripFinish->isEmpty() && $TripStarted->isEmpty() && $NewSubsciptions->isEmpty())
+        @if ($TripFinish->isEmpty() && $TripStarted->isEmpty() && $NewSubsciptions->isEmpty() && $PaidOrders->isEmpty())
         <a class="dropdown-item">
           <div class="content">
             <p>No New Notifications</p>
@@ -87,6 +108,74 @@
         </div>
       </li>
       @endhasanyrole
+
+      <!-- Notifications for User -->
+      @hasrole('User')
+      <li style="margin-right:15px;" class="nav-item dropdown nav-notifications">
+        <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i data-feather="bell"></i>
+          <div @if(count($StartedOrders) || count($InProgressOrders) || count($CompletedOrders) ) class="indicator" @endif>
+            <div class="circle"></div>
+          </div>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="notificationDropdown">
+          <div class="dropdown-header d-flex align-items-center justify-content-between">
+            <p class="mb-0 font-weight-medium">{{ count($StartedOrders) + count($InProgressOrders) + count($CompletedOrders) }} New Notifications</p>
+          </div>
+          <div class="dropdown-body">
+
+          <!-- Order Started Notification -->
+          @foreach($StartedOrders as $serial => $order)
+              <a href="{{ url('/order/view')}}" class="dropdown-item">
+                <div class="icon">
+                  <i data-feather="package"></i>
+                </div>
+                <div class="content">
+                  <p>Order#{{$order->id}} has been started!</p>
+                  <p class="sub-text text-muted">{{ $order->created_at->diffForHumans() }}</p>
+                </div>
+              </a>
+          @endforeach
+
+          <!-- Order In Progress Notification -->
+          @foreach($InProgressOrders as $serial => $order)
+              <a href="{{ url('/order/view')}}" class="dropdown-item">
+                <div class="icon">
+                  <i data-feather="truck"></i>
+                </div>
+                <div class="content">
+                  <p>Order#{{$order->id}} has been shipped!</p>
+                  <p class="sub-text text-muted">{{ $order->created_at->diffForHumans() }}</p>
+                </div>
+              </a>
+          @endforeach
+
+          <!-- Order In Progress Notification -->
+          @foreach($CompletedOrders as $serial => $order)
+              <a href="{{ url('/order/view')}}" class="dropdown-item">
+                <div class="icon">
+                  <i data-feather="check-square"></i>
+                </div>
+                <div class="content">
+                  <p>Order#{{$order->id}} has been completed!</p>
+                  <p class="sub-text text-muted">{{ $order->created_at->diffForHumans() }}</p>
+                </div>
+              </a>
+          @endforeach
+
+          <!-- If Empty Notifications-->
+          @if ($StartedOrders->isEmpty() && $InProgressOrders->isEmpty() && $CompletedOrders->isEmpty())
+          <a class="dropdown-item">
+            <div class="content">
+              <p>No New Notifications</p>
+            </div>
+          </a>                
+          @endif
+
+          </div>
+        </div>
+      </li>
+      @endhasrole
 
       <!-- Notifications for Driver -->
       @hasrole('Driver')

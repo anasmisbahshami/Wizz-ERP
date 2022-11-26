@@ -341,20 +341,28 @@ class OrderBookingController extends Controller
                     $CurrentDate = Carbon::now();
                     $SubscriptionEndDate = $subscription->end_date;
                     $ValidUptoResult = $SubscriptionEndDate->gte($CurrentDate);
-                    //Creating Order
-                    $order = new Order();
-                    $order->type = 'Subscription';
-                    $order->status = 'Confirmed';
-                    $order->user_id = $subscription->user_id;
-                    $order->booked_by = Auth::id();
-                    $order->save();
-                    return array('success' => true,
-                                'subscription' => $user_subscription->subscription->name,
-                                'remaining_weight' => $subscription->remaining_weight,
-                                'vaild_upto' => Carbon::parse($subscription->end_date)->format('d-F-Y'),
-                                'valid_upto_result' => $ValidUptoResult,
-                                'order_id' => encrypt($order->id)        
-                            );
+                    //Checking User Subscription Valid Upto Date
+                    if ($ValidUptoResult) {
+                        //Creating Order if Valid Date
+                        $order = new Order();
+                        $order->type = 'Subscription';
+                        $order->status = 'Confirmed';
+                        $order->user_id = $subscription->user_id;
+                        $order->booked_by = Auth::id();
+                        $order->save();
+                        return array('success' => true,
+                                    'subscription' => $user_subscription->subscription->name,
+                                    'remaining_weight' => $subscription->remaining_weight,
+                                    'vaild_upto' => Carbon::parse($subscription->end_date)->format('d-F-Y'),
+                                    'valid_upto_result' => $ValidUptoResult,
+                                    'order_id' => encrypt($order->id));
+                    }else{
+                        return array('success' => true,
+                                    'subscription' => $user_subscription->subscription->name,
+                                    'remaining_weight' => $subscription->remaining_weight,
+                                    'vaild_upto' => Carbon::parse($subscription->end_date)->format('d-F-Y'),
+                                    'valid_upto_result' => $ValidUptoResult);
+                    }
                 }else{
                     return array('success' => false, 'msg' => 'No Subscription Found with this Email!');
                 }

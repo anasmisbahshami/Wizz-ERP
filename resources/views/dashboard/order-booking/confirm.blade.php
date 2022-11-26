@@ -21,7 +21,7 @@
 <script>
     $(document).ready(function(){
         setTimeout(function(){
-            window.location.replace("http://www.google.com");
+            window.location.replace('http://127.0.0.1:8000/order/view');
         }, 3000);
     })
 </script>

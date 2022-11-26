@@ -118,8 +118,13 @@ class PermissionSeeder extends Seeder
         //Assigning Permission To Driver Role
         User::find(4)->assignRole($driver);
 
-        //User
+        //User Role
         $user = Role::create(['name' => 'User', 'description' => 'This is the role for application users.' ]);
+
+        //User Permissions
+        $user->syncPermissions(['View Order','View Order Details','Download Order Invoice', 'Acknowledge Order', 'Track Order', 'View Subscription']);
+
+        //Assigning Permission To User Role
         User::find(5)->assignRole($user);
 
         //Vendor

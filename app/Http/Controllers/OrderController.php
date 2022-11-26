@@ -12,7 +12,39 @@ class OrderController extends Controller
 {
     public function view()
     {
-        $orders = Order::orderBy('id','DESC')->get();    
+        if (\Auth::user()->hasRole('User')) {
+            //Arranging User Orders
+            $Unconfirmed = Order::where('user_id', \Auth::id())->where('status','Unconfirmed')->orderBy('id','DESC')->get();
+            $Confirmed = Order::where('user_id', \Auth::id())->where('status','Confirmed')->orderBy('id','DESC')->get();
+            $Unpaid = Order::where('user_id', \Auth::id())->where('status','Unpaid')->orderBy('id','DESC')->get();
+            $Paid = Order::where('user_id', \Auth::id())->where('status','Paid')->orderBy('id','DESC')->get();
+            $Started = Order::where('user_id', \Auth::id())->where('status','Started')->orderBy('id','DESC')->get();
+            $In_progress = Order::where('user_id', \Auth::id())->where('status','In progress')->orderBy('id','DESC')->get();
+            $Complete = Order::where('user_id', \Auth::id())->where('status','Complete')->orderBy('id','DESC')->get();
+
+            $orders = $Unconfirmed->merge($Confirmed);
+            $orders = $orders->merge($Unpaid);
+            $orders = $orders->merge($Paid);
+            $orders = $orders->merge($Started);
+            $orders = $orders->merge($In_progress);
+            $orders = $orders->merge($Complete);
+        }else{
+            //Arranging User Orders
+            $Unconfirmed = Order::where('status','Unconfirmed')->orderBy('id','DESC')->get();
+            $Confirmed = Order::where('status','Confirmed')->orderBy('id','DESC')->get();
+            $Unpaid = Order::where('status','Unpaid')->orderBy('id','DESC')->get();
+            $Paid = Order::where('status','Paid')->orderBy('id','DESC')->get();
+            $Started = Order::where('status','Started')->orderBy('id','DESC')->get();
+            $In_progress = Order::where('status','In progress')->orderBy('id','DESC')->get();
+            $Complete = Order::where('status','Complete')->orderBy('id','DESC')->get();
+
+            $orders = $Unconfirmed->merge($Confirmed);
+            $orders = $orders->merge($Unpaid);
+            $orders = $orders->merge($Paid);
+            $orders = $orders->merge($Started);
+            $orders = $orders->merge($In_progress);
+            $orders = $orders->merge($Complete);
+        }
         return view('dashboard.order.view', compact('orders'));
     }
 
@@ -140,10 +172,15 @@ class OrderController extends Controller
     {
         $id = decrypt($id);
         $order = Order::find($id);
-        $order->notify_paid = '0';
-        $order->notify_start = '0';
-        $order->notify_in_progress = '0';
-        $order->notify_complete = '0';
+
+        if(\Auth::user()->hasRole('User')){
+            $order->notify_start = '0';
+            $order->notify_in_progress = '0';
+            $order->notify_complete = '0';
+        }else{
+            $order->notify_paid = '0';
+        }
+
         $order->save();
 
         return redirect()->back()->with('success', 'Order Acknowledged!');

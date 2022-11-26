@@ -24,8 +24,8 @@
                 </li>
             @endif
 
-            {{-- Driver Interface --}}
-            @if(\Auth::user()->hasRole('Driver'))
+            {{-- Profile --}}
+            @if(!\Auth::user()->hasAnyRole(['Super Admin','Admin']))
                 <li class="nav-item nav-category">My Profile</li>
                 <li class="nav-item {{ active_class(['profile/*']) }}">
                     <a href="{{ url('/profile/view') }}" class="nav-link">
@@ -33,7 +33,10 @@
                         <span class="link-title">Profile</span>
                     </a>
                 </li>
+            @endif
 
+            {{-- Driver Interface --}}
+            @if(\Auth::user()->hasRole('Driver'))
                 <li class="nav-item nav-category">Active Trips</li>
                 <li class="nav-item {{ active_class(['trip/*']) }}">
                     <a href="{{ url('trip/view') }}" class="nav-link">

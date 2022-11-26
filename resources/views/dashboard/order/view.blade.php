@@ -54,6 +54,9 @@
                   <th>
                     Type
                   </th>
+                  <th class="text-center">
+                    Tracking Code
+                  </th>
                   <th>
                     Creation Date
                   </th>
@@ -67,10 +70,11 @@
               </thead>
               <tbody>
                 @foreach($orders as $serial => $order)
-                <tr @if ($order->notify_paid == '1' || $order->notify_complete == '1') style="background-color:#101920;" @endif>
+                <tr @if(\Auth::user()->hasRole('User')) @if ($order->notify_start == '1' || $order->notify_in_progress == '1' || $order->notify_complete == '1') style="background-color:#101920;" @endif @elseif(!\Auth::user()->hasRole('User')) @if ($order->notify_paid == '1') style="background-color:#101920;" @endif @endif>
                   <td>{{ $serial + 1 }}</td>
                   <td>{{ $order->user->name }}</td>
                   <td>{{ $order->type }}</td>
+                  <td class="text-center">{{ ($order->tracking_code) ? $order->tracking_code : 'Undefined' }}</td>
                   <td>{{ \Carbon\Carbon::parse($order->created_at)->format('d M Y') }}</td>
                   <td class="text-center align-middle">
                   
@@ -81,6 +85,8 @@
                   <!-- Confirmed Status -->
                   @elseif($order->status == 'Confirmed')
                   <h5><span class="badge badge-primary" data-toggle="modal" data-target="#paidModal{{$serial}}">{{ $order->status }}</span></h5>
+                  
+                  @can('Edit Order Details')
                   <div class="modal fade text-left" id="paidModal{{$serial}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
@@ -95,7 +101,7 @@
                         @csrf
                         <div class="row">
                           <div class="col-md-12">
-                            <input required type="file" data-allowed-file-extensions="png jpg jpeg pdf doc docx zip" data-max-file-size="20M" name="file" id="myDropify" class="border"/>
+                            <input required type="file" data-allowed-file-extensions="png jpg jpeg pdf doc docx zip" data-max-file-size="20M" name="file" class="myDropify" class="border"/>
                         </div>
                       </div>
                       <div class="modal-footer">
@@ -106,6 +112,7 @@
                       </div>
                     </div>
                   </div>
+                  @endcan
                   
                   <!-- Unpaid Status -->
                   @elseif($order->status == 'Unpaid')
@@ -114,6 +121,8 @@
                   <!-- Paid Status -->
                   @elseif($order->status == 'Paid')
                     <h5><span class="badge badge-secondary" data-toggle="modal" data-target="#startModal{{$serial}}">{{ $order->status }}</span></h5>
+
+                    @can('Edit Order Details')
                     <div class="modal fade text-left" id="startModal{{$serial}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -133,10 +142,13 @@
                         </div>
                       </div>
                     </div>
+                    @endcan
 
                   <!-- Started Status -->
                   @elseif($order->status == 'Started')
                     <h5><span class="badge badge-dark" data-toggle="modal" data-target="#InProgress{{$serial}}">{{ $order->status }}</span></h5>
+
+                    @can('Edit Order Details')
                     <div class="modal fade text-left" id="InProgress{{$serial}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -155,11 +167,14 @@
                           </div>
                         </div>
                       </div>
-                    </div>  
+                    </div>
+                    @endcan  
 
                   <!-- In progress Status -->
                   @elseif($order->status == 'In progress')
                     <h5><span class="badge badge-info" data-toggle="modal" data-target="#completeModal{{$serial}}">{{ $order->status }}</span></h5>
+
+                    @can('Edit Order Details')
                     <div class="modal fade text-left" id="completeModal{{$serial}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -178,7 +193,8 @@
                           </div>
                         </div>
                       </div>
-                    </div>  
+                    </div>
+                    @endcan  
 
                   <!-- Complete Status -->
                   @elseif($order->status == 'Complete')
