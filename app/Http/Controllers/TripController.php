@@ -174,6 +174,9 @@ class TripController extends Controller
         $trip->notify_start = 1;
         $trip->save();
 
+        //Triggering Event Vehicle Current Latitude & Longitude
+        event(new \App\Events\VehicleMoved($latitude, $longitude));
+
         return redirect()->back()->with('success', 'Trip Marked as Started!');
     }
 
