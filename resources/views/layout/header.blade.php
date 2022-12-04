@@ -28,6 +28,13 @@
   <div class="navbar-content">
     <ul class="navbar-nav">
 
+      <!-- Chat Messenger -->
+      <li class="nav-item dropdown nav-apps">
+        <a class="nav-link" target="_blank" href="{{ url('/chat') }}">
+          <i data-feather="message-square"></i>
+        </a>
+      </li>
+
       <!-- Notifications for Super Admin & Admin -->
       @hasanyrole('Super Admin|Admin')
       <li style="margin-right:15px;" class="nav-item dropdown nav-notifications">
