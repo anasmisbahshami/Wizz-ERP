@@ -79,6 +79,7 @@ Route::group(['middleware' => 'auth', 'prevent-back-history'], function () {
     Route::get('/user-subscription/destroy/{id}', [App\Http\Controllers\UserSubscriptionController::class, 'destroy'])->middleware('can:Delete User Subscription');
     Route::get('/user-subscription/mail/{id}', [App\Http\Controllers\UserSubscriptionController::class, 'renew_mail'])->middleware('can:Renewal Mail User Subscription');
     Route::get('/user-subscription/acknowledge/{id}', [App\Http\Controllers\UserSubscriptionController::class, 'acknowledge'])->middleware('can:Acknowledge User Subscription');
+    Route::get('/user/subscribe/{id}', [App\Http\Controllers\UserSubscriptionController::class, 'user_subscribe'])->middleware('can:View Subscription');
 
     //Trip Routes
     Route::get('/trip/view', [App\Http\Controllers\TripController::class, 'view'])->middleware('can:View Trip');

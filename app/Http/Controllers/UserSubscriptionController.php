@@ -21,6 +21,51 @@ class UserSubscriptionController extends Controller
         return view('dashboard.user-subscriptions.add');
     }
 
+    public function user_subscribe(Request $request, $id)
+    {
+        $id = decrypt($id);
+        $IfUserHasSubscription = UserSubscription::where('user_id', \Auth::id())->first();
+
+        //If User has a previous subscription
+        if ($IfUserHasSubscription) {
+
+            //Calculating Previous Weight
+            $CurrentDate = Carbon::now();
+            $PreviousEndDate = $IfUserHasSubscription->end_date;
+
+            $result = $PreviousEndDate->gte($CurrentDate);
+            if ($result) {
+                $remaining_Weight = $IfUserHasSubscription->remaining_weight;
+            }else{
+                $remaining_Weight = 0;
+            }
+    
+            $IfUserHasSubscription->update([
+                "subscription_id" => $id,
+                "start_date" => Carbon::now(),
+                "end_date" => Carbon::now()->addMonth(),
+                "remaining_weight" => Subscription::find($id)->weight+$remaining_Weight,
+                "status" => 'Subscribed',
+                "notify_subscribed" => '1'
+            ]);
+
+            return redirect()->back()->with('success', 'User Subscription has been updated.');
+        }
+
+        //If User has no previous subscription
+        $user_subscription = new UserSubscription();
+        $user_subscription->user_id = \Auth::id();
+        $user_subscription->subscription_id = $id;
+        $user_subscription->start_date = Carbon::now();
+        $user_subscription->end_date = Carbon::now()->addMonth();
+        $user_subscription->remaining_weight = Subscription::find($id)->weight;
+        $user_subscription->status = 'Subscribed';
+        $user_subscription->notify_subscribed = '1';
+        $user_subscription->save();
+
+        return redirect()->back()->with('success', 'User Subscription has been added.');
+    }
+
     public function store(Request $request)
     {
         $IfUserHasSubscription = UserSubscription::where('user_id', $request->user_id)->first();

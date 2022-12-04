@@ -9,7 +9,7 @@
   <nav class="page-breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{ url('subscription/view') }}">Subscription</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Add</li>
+      <li class="breadcrumb-item active" aria-current="page">Edit</li>
     </ol>
   </nav>
 
@@ -36,7 +36,7 @@
             @foreach ($subscriptions as $subscription)
               <div class="col-md-4 stretch-card grid-margin grid-margin-md-0">
                 <div class="card">
-                  <div class="card-body">
+                  <div class="card-body" @if ($subscription->id == $IfUserHasSubscription->subscription_id) style="border: 2px solid #E09946" @endif>
                     <h5 class="text-center text-uppercase mt-3 mb-4">{{$subscription->name}}</h5>
                     <i @if($subscription->name == 'Bronze') data-feather="award" @elseif($subscription->name == 'Silver') data-feather="gift" @elseif($subscription->name == 'Gold') data-feather="briefcase" @endif class="text-primary icon-xxl d-block mx-auto my-3"></i>
                     <h3 class="text-center font-weight-light">Rs {{number_format($subscription->price, 0)}}</h3>
@@ -58,7 +58,7 @@
                         <i data-feather="check" class="icon-md text-primary mr-2"></i>
                         <p>30 Days Validation</p>
                     </div>
-                    <a href="{{ url('/user/subscribe/'.encrypt($subscription->id)) }}" class="btn btn-primary d-block mx-auto mt-4">Purchase</a>
+                    <a @if ($subscription->id == $IfUserHasSubscription->subscription_id) style="background-color: #E09946" @endif href="{{ url('/user/subscribe/'.encrypt($subscription->id)) }}" class="btn btn-primary d-block mx-auto mt-4">@if ($subscription->id == $IfUserHasSubscription->subscription_id) Purchased @else Purchase @endif</a>
                   </div>
                 </div>
               </div>

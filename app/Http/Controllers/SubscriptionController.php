@@ -11,8 +11,19 @@ class SubscriptionController extends Controller
     public function view()
     {
         if (\Auth::user()->hasRole('User')) {
-            $subscriptions = Subscription::all();
-            return view('dashboard.subscriptions.details.add', compact('subscriptions'));
+            $IfUserHasSubscription = UserSubscription::where('user_id', \Auth::id())->first();
+            if ($IfUserHasSubscription) {
+                if ($IfUserHasSubscription->status == 'Subscribed') {
+                    $subscriptions = Subscription::all();
+                    return view('dashboard.subscriptions.details.edit', compact('subscriptions','IfUserHasSubscription'));
+                }else{
+                    $subscriptions = Subscription::all();
+                    return view('dashboard.subscriptions.details.add', compact('subscriptions'));
+                }
+            }else{
+                $subscriptions = Subscription::all();
+                return view('dashboard.subscriptions.details.add', compact('subscriptions'));
+            }
         }
         
         $subscriptions = Subscription::all();
