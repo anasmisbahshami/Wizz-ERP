@@ -18,6 +18,9 @@
       $DriverStartTrip++;
     }
   }
+
+  //Chat Indicator
+  $UnreadMessages = \App\Models\ChMessage::where('to_id', Auth::id())->where('seen', 0)->get();
   
 @endphp
 
@@ -32,6 +35,9 @@
       <li class="nav-item dropdown nav-apps">
         <a class="nav-link" target="_blank" href="{{ url('/chat') }}">
           <i data-feather="message-square"></i>
+          <div @if(count($UnreadMessages)) class="indicator" @endif>
+            <div class="circle"></div>
+          </div>
         </a>
       </li>
 

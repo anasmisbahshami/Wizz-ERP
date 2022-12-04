@@ -10,6 +10,11 @@ class SubscriptionController extends Controller
 {
     public function view()
     {
+        if (\Auth::user()->hasRole('User')) {
+            $subscriptions = Subscription::all();
+            return view('dashboard.subscriptions.details.add', compact('subscriptions'));
+        }
+        
         $subscriptions = Subscription::all();
         return view('dashboard.subscriptions.view', compact('subscriptions'));
     }
