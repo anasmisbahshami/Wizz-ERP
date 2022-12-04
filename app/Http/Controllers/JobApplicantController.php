@@ -18,7 +18,8 @@ class JobApplicantController extends Controller
     {
         $id = decrypt($id);
         $job_applicant = JobApplicant::find($id);
-        return \Storage::download($job_applicant->resume);
+        return \Storage::disk('s3')->download($job_applicant->resume);
+        // return \Storage::download($job_applicant->resume);
     }
 
     public function delete_applicant($id)
