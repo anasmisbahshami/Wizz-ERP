@@ -9,6 +9,8 @@ class Order extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['status'];
+
     public function user_subscription(){
         return $this->hasOne(UserSubscription::class, 'user_id', 'user_id');
     }

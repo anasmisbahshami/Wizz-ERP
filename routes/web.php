@@ -19,8 +19,12 @@ Auth::routes();
     Route::get('/order/track/{id}', [App\Http\Controllers\OrderTrackingController::class, 'user_tracking']);
 
 Route::group(['middleware' => 'auth', 'prevent-back-history'], function () {
+    
     //Trigger Daily Notifications
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/trigger', function () {
+        Artisan::call('daily:update');
+        return ('All Notifications Sent!');
+    });
     
     //Home Route
     Route::get('/', [App\Http\Controllers\DashboardController::class, 'index']);
