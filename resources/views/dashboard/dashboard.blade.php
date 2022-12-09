@@ -76,11 +76,11 @@
                   </div>
                   <div class="row">
                     <div class="col-6 col-md-12 col-xl-5">
-                      <h3 class="mb-2">3,897</h3>
+                      <h3 class="mb-2">{{number_format($CustomerArray['CurrentMonthCustomers'], 0)}}</h3>
                       <div class="d-flex align-items-baseline">
-                        <p class="text-success">
-                          <span>+3.3%</span>
-                          <i data-feather="arrow-up" class="icon-sm mb-1"></i>
+                        <p @if ($CustomerArray['CustomerSign'] == 'Positive') class="text-success" @else class="text-danger" @endif>
+                          <span>{{number_format($CustomerArray['CustomersGrowthPercentage'], 1)}}%</span>
+                          <i @if ($CustomerArray['CustomerSign'] == 'Positive') data-feather="arrow-up" @else data-feather="arrow-down" @endif  class="icon-sm mb-1"></i>
                         </p>
                       </div>
                     </div>
@@ -111,11 +111,11 @@
                   </div>
                   <div class="row">
                     <div class="col-6 col-md-12 col-xl-5">
-                      <h3 class="mb-2">35,084</h3>
+                      <h3 class="mb-2">{{number_format($SubscriptionArray['CurrentMonthSubscriptions'], 0)}}</h3>
                       <div class="d-flex align-items-baseline">
-                        <p class="text-danger">
-                          <span>-2.8%</span>
-                          <i data-feather="arrow-down" class="icon-sm mb-1"></i>
+                        <p @if ($SubscriptionArray['SubscriptionSign'] == 'Positive') class="text-success" @else class="text-danger" @endif>
+                          <span>{{number_format($SubscriptionArray['SubscriptionGrowthPercentage'], 1)}}%</span>
+                          <i @if ($SubscriptionArray['SubscriptionSign'] == 'Positive') data-feather="arrow-up" @else data-feather="arrow-down" @endif class="icon-sm mb-1"></i>
                         </p>
                       </div>
                     </div>
@@ -130,7 +130,7 @@
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex justify-content-between align-items-baseline">
-                    <h6 class="card-title mb-0">Growth</h6>
+                    <h6 class="card-title mb-0">Revenue</h6>
                     <div class="dropdown mb-2">
                       <button class="btn p-0" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
@@ -146,11 +146,11 @@
                   </div>
                   <div class="row">
                     <div class="col-6 col-md-12 col-xl-5">
-                      <h3 class="mb-2">89.87%</h3>
+                      <h3 class="mb-2">${{number_format($RevenueArray['CurrentMonthDollarRevenue'], 0)}}</h3>
                       <div class="d-flex align-items-baseline">
-                        <p class="text-success">
-                          <span>+2.8%</span>
-                          <i data-feather="arrow-up" class="icon-sm mb-1"></i>
+                        <p @if ($RevenueArray['RevenueSign'] == 'Positive') class="text-success" @else class="text-danger" @endif>
+                          <span>{{number_format($RevenueArray['RevenueGrowthPercentage'], 1)}}%</span>
+                          <i @if ($RevenueArray['RevenueSign'] == 'Positive') data-feather="arrow-up" @else data-feather="arrow-down" @endif class="icon-sm mb-1"></i>
                         </p>
                       </div>
                     </div>
