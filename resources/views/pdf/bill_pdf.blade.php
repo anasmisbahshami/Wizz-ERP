@@ -47,7 +47,7 @@
                     <div class="row invoice_header" style="display:flex;margin-bottom:50px;font-size:14px;margin-top:0;line-height:12px;">
                         <div class="col-md-6 text-left" style="max-width:45%;">
                             <div class="logo_img_invoice">
-                                <img src="{{$base64}}" style="width:240px;">
+                                <img src="{{$base64}}" style="width:150px;">
                             </div>
                         </div>
                         <div class="col-md-6 text-right" style="max-width:40%;float:right;margin-top:0;text-align:right;">
@@ -62,36 +62,7 @@
                             <p>Jinnah Street</p>
                             <p>Penthouse 319-Js</p>
                             <p>Gulberg Greens, ISB</p>
-                            <p>+4400</p>
                             <p>info@wizz.pk</p>
-                        </div>
-                        <div class="col-md-6 smallTableInvoice" style="max-width:40%;float:right;">
-                            <div class="table-responsive">
-                                <table class="table" cellspacing="0">
-                                    <tbody>
-                                        <tr>
-                                            <th></th>
-                                            <td>4710295009</td>
-                                        </tr>
-                                        <tr>
-                                            <th>INVOICE NO.</th>
-                                            <td>PO-0001</td>
-                                        </tr>
-                                        <tr>
-                                            <th>DATE</th>
-                                            <td>{{ Carbon\Carbon::now()->format('d/m/Y') }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Purchase Order No.</th>
-                                            <td>4503944241</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Vendor No.</th>
-                                            <td>2021</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
                         </div>
                     </div>
 	
@@ -118,8 +89,8 @@
                                                 <td class="idNumber">{{$key+1}}</td>
                                                 <td style="width:30%;">{{ $trip->vehicle->name }}</td>
                                                 <td style="width:30%;">{{ $trip->route->name }}</td>
-                                                <td>{{ $trip->date }}</td>
-                                                <td>{{ $trip->rate }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($trip->date)->format('d-F-Y') }}</td>
+                                                <td>Rs. {{ number_format($trip->rate, 0) }}</td>
                                                 <?php 
                                                     $total = $total + $trip->rate;
                                                 ?>
@@ -131,7 +102,7 @@
                                             <td></td>
                                             <td></td>
                                             <td class="totalsData"><strong>TOTAL</strong></td>
-                                            <td class="totalsData"><strong>PKR {{ $total }}</strong></td>
+                                            <td class="totalsData"><strong>Rs. {{ number_format($total, 0) }}</strong></td>
                                         </tr>
                                     </tbody>
                                 </table>

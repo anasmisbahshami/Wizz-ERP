@@ -3,6 +3,14 @@
 @push('plugin-styles')
     <link href="{{ asset('assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/select2/select2.min.css') }}" rel="stylesheet" />
+    <style>
+     .datepicker.input-group .input-group-addon {
+        padding: 0 10px;
+        border-left: none !important;
+        display: flex;
+        align-items: center;
+      }
+    </style>
 @endpush
 
 @section('content')
@@ -183,6 +191,57 @@
         </div>
       </div>
     @endcan
+
+
+    @can('Generate Date Range Bill')
+    <div class="mb-3" style="text-align: center;">
+      <h4>Bill Statement - Date Range</h4>
+    </div>
+  
+  <div class="row">
+    <div class="col-xl-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+        <form action="{{url('bill/generate/date/range/statement')}}" method="POST" enctype="multipart/form-data">
+          @csrf
+            <div class="row">
+              <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Starting Date<span style="color:red;"> *</span></label>
+                    <div class="input-group date datepicker" id="datePickerExample">
+                      <input required value="{{ \Carbon\Carbon::now()->subMonth(1)->format('Y-m-d') }}" type="text" name="starting_date" class="form-control"><span class="input-group-addon"><i style="color:#E09946" data-feather="calendar"></i></span>
+                  </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Ending Date<span style="color:red;"> *</span></label>
+                    <div class="input-group date datepicker" id="datePickerExample">
+                      <input required value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" type="text" name="ending_date" class="form-control"><span class="input-group-addon"><i style="color:#E09946" data-feather="calendar"></i></span>
+                  </div>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label>Vehicle</label>
+                    <select id="vehicle" name="vehicle_id" class="js-example-basic-single w-100">
+                    <option value="">Default</option>
+                    @foreach (\App\Models\Vehicle::all() as $vehicle)
+                      <option value="{{$vehicle->id}}">{{$vehicle->name}}</option>
+                    @endforeach
+                    </select>
+                  </div>
+                </div>
+                  <div class="col-md-2">
+                    <button style="margin-top: 30px;" type="submit" class="btn btn-primary">Generate</button>
+                  </div>
+            </div>
+        </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  @endcan
 
 @endsection
 

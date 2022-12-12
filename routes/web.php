@@ -103,6 +103,7 @@ Route::group(['middleware' => 'auth', 'prevent-back-history'], function () {
     Route::get('/bill/view', [App\Http\Controllers\BillController::class, 'view'])->middleware('can:View Bill');
     Route::post('/bill/generate/monthly/statement', [App\Http\Controllers\BillController::class, 'monthly_generate'])->middleware('can:Generate Monthly Bill');
     Route::post('/bill/generate/monthly/range/statement', [App\Http\Controllers\BillController::class, 'monthly_range_generate'])->middleware('can:Generate Monthly Range Bill');
+    Route::post('/bill/generate/date/range/statement', [App\Http\Controllers\BillController::class, 'date_range_generate'])->middleware('can:Generate Date Range Bill');
 
     //Order Routes
     Route::get('/order/view', [App\Http\Controllers\OrderController::class, 'view'])->middleware('can:View Order');
