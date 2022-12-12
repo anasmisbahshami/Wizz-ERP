@@ -30,13 +30,17 @@
            <form method="POST" action="{{ url('user/store') }}" class="forms-sample" enctype="multipart/form-data">
             @csrf
             <div class="row">
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-4">
                 <label for="name">User Name<span style="color:red;"> *</span></label>
                 <input required type="text" class="form-control" id="name" name="name" autocomplete="off" placeholder="e.g. User Name">
               </div>
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-4">
                 <label for="email">Email<span style="color:red;"> *</span></label>
                 <input required type="email" class="form-control" id="email" name="email" placeholder="user@email.com">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="color">Color</label>
+                <input type="color" class="form-control" id="color" name="color">
               </div>
               <div class="form-group col-md-6">
                 <label for="password">Password <span style="color:red;"> *</span></label>

@@ -1,17 +1,26 @@
 $(function() {
   'use strict';
 
+  // Bar chart Array Formation
+  var names = [];
+  var values = [];
+  
+  for(var i=0; i<OrderStatisticsArray.length; i++){
+    names[i] = OrderStatisticsArray[i].status;    
+    values[i] = OrderStatisticsArray[i].count;
+  }
+
   // Bar chart
   if($('#chartjsBar').length) {
     new Chart($("#chartjsBar"), {
       type: 'bar',
       data: {
-        labels: [ "China", "America", "India", "Germany", "Oman"],
+        labels: names,
         datasets: [
           {
-            label: "Population",
-            backgroundColor: ["#b1cfec","#7ee5e5","#66d1d1","#f77eb9","#4d8af0"],
-            data: [2478,5267,734,2084,1433]
+            label: "Orders",
+            backgroundColor: ["#FFFFFF","#E09946",'#4d8af0','#7ee5e5','#f77eb9','#fbbc06','#ffe69d'],
+            data: values
           }
         ]
       },
@@ -44,16 +53,28 @@ $(function() {
     });
   }
 
+
+  // Donut chart Array Formation
+  var names = [];
+  var values = [];
+  var colors = [];
+  
+  for(var i=0; i<OrderBookedByArray.length; i++){
+    names[i] = OrderBookedByArray[i].name;    
+    values[i] = OrderBookedByArray[i].count;
+    colors[i] = OrderBookedByArray[i].color;
+  }
+
   if($('#chartjsDoughnut').length) {
     new Chart($('#chartjsDoughnut'), {
       type: 'doughnut',
       data: {
-        labels: ["Junaid", "Hamza"],
+        labels: names,
         datasets: [
           {
             label: "Population (millions)",
-            backgroundColor: ["#FFFFFF","#E09946"],
-            data: [2478,4267]
+            backgroundColor: colors,
+            data: values
           }
         ]
       }

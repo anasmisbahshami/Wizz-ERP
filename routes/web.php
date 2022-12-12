@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth', 'prevent-back-history'], function () {
     
     //Home Route
     Route::get('/', [App\Http\Controllers\DashboardController::class, 'index']);
+    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'filter']);
 
     //User Profile Routes
     Route::get('/profile/view', [App\Http\Controllers\UserProfileController::class, 'view']);

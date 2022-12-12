@@ -24,8 +24,7 @@
     @endif
 
     <!-- Dashboard Filter Form-->
-    <form action="{{ url('/') }}" enctype="multipart/form-data" method="POST">
-        @csrf
+    <form action="{{ url('/dashboard') }}" enctype="multipart/form-data" method="GET">
         <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
             <div>
                 <h4 class="mb-3 mb-md-0">Welcome to Wizz Express & Logistics!</h4>
@@ -171,7 +170,7 @@
             <div class="card" style="height: 321px;">
               <div class="card-body">
                 <h6 class="card-title">Order Stats</h6>
-                <canvas id="chartjsGroupedBar"></canvas>
+                <canvas id="chartjsBar"></canvas>
               </div>
             </div>
         </div>
@@ -200,5 +199,9 @@
 @push('custom-scripts')
     <script src="{{ asset('assets/js/dashboard.js') }}"></script>
     <script src="{{ asset('assets/js/datepicker.js') }}"></script>
-  <script src="{{ asset('assets/js/chartjs.js') }}"></script>
+    <script src="{{ asset('assets/js/chartjs.js') }}"></script>
+    <script>
+      var OrderStatisticsArray = @json($OrderStatisticsArray);
+      var OrderBookedByArray = @json($OrderBookedByArray);
+    </script>
 @endpush
