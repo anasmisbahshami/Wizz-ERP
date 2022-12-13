@@ -93,7 +93,7 @@ Route::group(['middleware' => 'auth', 'prevent-back-history'], function () {
     Route::get('/trip/edit/{id}', [App\Http\Controllers\TripController::class, 'edit'])->middleware('can:Edit Trip');
     Route::post('/trip/update/{id}', [App\Http\Controllers\TripController::class, 'update'])->middleware('can:Edit Trip');
     Route::get('/trip/destroy/{id}', [App\Http\Controllers\TripController::class, 'destroy'])->middleware('can:Delete Trip');
-    Route::post('/trip/get/rate', [App\Http\Controllers\TripController::class, 'get_rate'])->name('getRate')->middleware('can:Add Trip');
+    Route::post('/trip/get/rate', [App\Http\Controllers\TripController::class, 'get_rate'])->name('getRate');
     Route::get('/trip/acknowledge/{id}', [App\Http\Controllers\TripController::class, 'acknowledge'])->middleware('can:Acknowledge Trip');
     Route::get('/trip/start/{id}', [App\Http\Controllers\TripController::class, 'start'])->middleware('can:Edit Trip Status');
     Route::get('/trip/complete/{id}', [App\Http\Controllers\TripController::class, 'complete'])->middleware('can:Edit Trip Status');

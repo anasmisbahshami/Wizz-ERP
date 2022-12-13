@@ -102,12 +102,33 @@ class PermissionSeeder extends Seeder
         $super_admin = Role::create(['name' => 'Super Admin', 'description' => 'This Role has Complete Authority, Not Modifiable.' ]);
         User::find(1)->assignRole($super_admin);
 
-        //Admin
+        //Admin Role
         $admin = Role::create(['name' => 'Admin', 'description' => 'This is the role for admin users.' ]);
+        
+        //Admin Permissions
+        $admin->syncPermissions([
+        'Add User','View User','Edit User','Delete User',
+        'Add Vehicle','View Vehicle','Edit Vehicle','Delete Vehicle',
+        'Add Route','View Route','Edit Route','Delete Route',
+        'Add User Subscription','View User Subscription','Edit User Subscription','Delete User Subscription','Renewal Mail User Subscription','Acknowledge User Subscription',
+        'Add Trip','View Trip','Edit Trip','Delete Trip','Acknowledge Trip','Edit Trip Status','GPS Coordinates Trip',
+        'View Bill','Generate Monthly Bill','Generate Monthly Range Bill','Generate Date Range Bill',
+        'Add Job','View Job','Edit Job','Delete Job',
+        'View Job Application','Edit Job Application','Delete Job Application',
+        'View Job Applicant','Shortlist Job Applicant','Delete Job Applicant',
+        'View GPS','Track GPS',
+        'View Order','Delete Order','Download Order Invoice','Acknowledge Order','View Order Details','Edit Order Details','Add Subscription','View Subscription','Edit Subscription','Delete Subscription','Add City','Track Order']);
+
+        //Assigning Permission To Admin Role
         User::find(2)->assignRole($admin);
 
-        //Officer
+        //Officer Role
         $officer = Role::create(['name' => 'Officer', 'description' => 'This is the role for office users.' ]);
+        
+        //Officer Permissions
+        $officer->syncPermissions(['Book Order','Track Order','View Order','Download Order Invoice','View Order Details','Edit Order Details']);        
+        
+        //Assigning Permission To Officer Role
         User::find(3)->assignRole($officer);
 
         //Driver Role
