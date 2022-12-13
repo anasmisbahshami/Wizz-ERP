@@ -100,8 +100,8 @@ class PermissionSeeder extends Seeder
 
         //Super Admin
         $super_admin = Role::create(['name' => 'Super Admin', 'description' => 'This Role has Complete Authority, Not Modifiable.' ]);
-        $superUser = User::find(1);
-        $superUser->assignRole($super_admin);
+
+        // User::find(1)->assignRole($super_admin);
 
         //Admin Role
         $admin = Role::create(['name' => 'Admin', 'description' => 'This is the role for admin users.' ]);
@@ -121,8 +121,7 @@ class PermissionSeeder extends Seeder
         'View Order','Delete Order','Download Order Invoice','Acknowledge Order','View Order Details','Edit Order Details','Add Subscription','View Subscription','Edit Subscription','Delete Subscription','Add City','Track Order']);
 
         //Assigning Permission To Admin Role
-        $adminUser = User::find(2);
-        $adminUser->assignRole($admin);
+        // User::find(2)->assignRole($admin);
 
         //Officer Role
         $officer = Role::create(['name' => 'Officer', 'description' => 'This is the role for office users.' ]);
@@ -131,8 +130,7 @@ class PermissionSeeder extends Seeder
         $officer->syncPermissions(['Book Order','Track Order','View Order','Download Order Invoice','View Order Details','Edit Order Details']);        
         
         //Assigning Permission To Officer Role
-        $officeUser = User::find(3);
-        $officeUser->assignRole($officer);
+        // User::find(3)->assignRole($officer);
 
         //Driver Role
         $driver = Role::create(['name' => 'Driver', 'description' => 'This is the role for drivers.' ]);
@@ -141,8 +139,7 @@ class PermissionSeeder extends Seeder
         $driver->syncPermissions(['View Trip','Edit Trip Status','GPS Coordinates Trip']);
 
         //Assigning Permission To Driver Role
-        $driverUser = User::find(4);
-        $driverUser->assignRole($driver);
+        // User::find(4)->assignRole($driver);
 
         //User Role
         $user = Role::create(['name' => 'User', 'description' => 'This is the role for application users.' ]);
@@ -151,12 +148,10 @@ class PermissionSeeder extends Seeder
         $user->syncPermissions(['View Order','View Order Details','Download Order Invoice', 'Acknowledge Order', 'Track Order', 'View Subscription']);
 
         //Assigning Permission To User Role
-        $IsUser = User::find(5);
-        $IsUser->assignRole($user);
+        // User::find(5)->assignRole($user);
 
         //Vendor
         $vendor = Role::create(['name' => 'Vendor', 'description' => 'This is the role for vendors.' ]);
-        $VendorUser = User::find(6);
-        $VendorUser->assignRole($vendor);
+        // User::find(6)->assignRole($vendor);
     }
 }
