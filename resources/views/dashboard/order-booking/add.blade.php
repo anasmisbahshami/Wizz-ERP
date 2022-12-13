@@ -57,7 +57,7 @@
                 <label for="email">Vehicle<span style="color:red;"> *</span></label>
                 <select required class="js-example-basic-single w-100" id="vehicle_id" name="vehicle_id">
                     <option selected value="">Select</option>
-                    @foreach(\App\Models\Vehicle::all() as $vehicle)
+                    @foreach(\App\Models\Vehicle::where('type','LTV')->get() as $vehicle)
                         <option value="{{ $vehicle->id }}">{{ $vehicle->name }}</option>
                     @endforeach
                 </select>
@@ -164,7 +164,7 @@
                                   <label for="email">Vehicle<span style="color:red;"> *</span></label>
                                   <select required id="vehicle" name="vehicle_id">
                                       <option selected value="">Select</option>
-                                      @foreach(\App\Models\Vehicle::all() as $vehicle)
+                                      @foreach(\App\Models\Vehicle::where('type','LTV')->get() as $vehicle)
                                           <option @if ($item->vehicle_id == $vehicle->id) selected @endif value="{{ $vehicle->id }}">{{ $vehicle->name }}</option>
                                       @endforeach
                                   </select>
